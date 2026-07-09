@@ -10,7 +10,7 @@ eingabe = BASE / "../data/observ_1.wav"
 ausgabe_ns = BASE / "../sep/vmd/VmdNs.wav"
 ausgabe_hs = BASE / "../sep/vmd/VmdHs.wav"
 
-f_r = 25.0        # Rotationsgrundfrequenz in Hz (= rpm/60), fuer die Zuordnung
+f_grenze = 800.0  # Obergrenze des Maschinenbands in Hz (Zuordnungskriterium)
 K = 6             # Anzahl der Moden
 alpha = 2000.0    # Bandbreiten-Straffheit (gross = schmalere Moden)
 tau = 0.0         # Rauschtoleranz des Lagrange-Multiplikators (0 = strikt)
@@ -64,10 +64,9 @@ u_full[:, 1:T // 2] = np.conj(u_hat[:, -1:T // 2:-1])
 moden = np.real(np.fft.ifft(np.fft.ifftshift(u_full, axes=1), axis=1))
 moden = moden[:, N // 2:N // 2 + N]             # Spiegelung entfernen
 
-# --- Zuordnung: Moden nahe einer Harmonischen von f_r -> Nutzschall ---
+# --- Zuordnung: Moden im Maschinenband (<= f_grenze) -> Nutzschall ---
 omega_hz = np.abs(omega) * sr
-harmonisch = np.round(omega_hz / f_r) * f_r
-ist_nutz = np.abs(omega_hz - harmonisch) <= (f_r / 2)
+ist_nutz = omega_hz <= f_grenze
 
 ns = moden[ist_nutz].sum(axis=0)
 hs = moden[~ist_nutz].sum(axis=0)
