@@ -12,7 +12,7 @@ ausgabe_hs = BASE / "../sep/spectralsubtraction/SpecSubHs.wav"
 
 rauschreferenz_ende_s = 1.0   # erste Sekunde = Rauschreferenz
 alpha = 2.0                   # Oversubtraction-Faktor
-beta = 0.01                   # Spectral Floor
+beta = 0.02                   # Spectral Floor
 nperseg = 1024
 noverlap = 512
 
