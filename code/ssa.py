@@ -1,25 +1,3 @@
-"""
-SSA - Singular Spectrum Analysis (Broomhead & King, 1986; Golyandina et al.)
-Zerlegt das Signal ueber drei Schritte:
-  1. Einbettung: das 1D-Signal wird in eine Trajektorienmatrix (Hankel,
-     Fensterlaenge L) aus verschobenen Ausschnitten gepackt.
-  2. SVD: die Matrix wird in Eigentripel zerlegt; jedes beschreibt einen
-     Trend-, oszillatorischen oder Rausch-Anteil.
-  3. Rekonstruktion: die r fuehrenden Eigentripel (groesste Singulaerwerte)
-     werden per diagonaler Mittelung (Hankelisierung) zurueck ins Zeitsignal
-     gebracht = stationaerer/periodischer Anteil.
-
-Trennhebel: Stationaere, stark korrelierte Anteile (Maschinengeraeusch)
-konzentrieren sich in den fuehrenden Eigentripeln; Rauschen und Transienten
-verteilen sich auf die schwachen. Kein Frequenz-/Drehzahlwissen noetig -
-Trennung rein nach zeitlicher Korrelationsstruktur.
-
-Verarbeitung blockweise (Segmente), da die volle Trajektorienmatrix/SVD
-mit der Signallaenge schlecht skaliert.
-  Ns = r fuehrende Komponenten (stationaer)   = Nutzschall
-  Hs = Residuum y - Ns (schwache Komponenten) = Stoerschall
-"""
-
 from pathlib import Path
 
 import numpy as np
