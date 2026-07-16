@@ -1,20 +1,3 @@
-"""
-ANC - Adaptive Noise Cancelling (Widrow et al., 1975), Single-Channel-Variante
-Klassisches ANC braucht einen Referenzkanal mit korrelierter Stoerung. Da das
-SIPREMA-Setup effektiv einkanalig ist, wird eine SYNTHETISCHE, drehzahl-
-synchrone Referenz erzeugt: [cos, sin]-Paare fuer f_r und dessen Harmonische.
-Ein adaptiver LMS-Filter lernt online, wie diese Referenz im gemessenen Signal
-erscheint (Amplitude/Phase je Harmonische), und rekonstruiert daraus den
-drehzahlsynchronen Anteil. Der Fehler (Signal minus Rekonstruktion) enthaelt
-alles Nicht-Synchrone.
-  Ns = adaptiv rekonstruierter drehzahlsynchroner Anteil   = Nutzschall
-  Hs = Fehlersignal y - Ns                                 = Stoerschall
-
-Der adaptive Filter passt sich langsamen Amplituden-/Phasenaenderungen an
-(im Gegensatz zum starren Kammfilter). Transiente Stoerungen (Schlaege) passen
-nicht zur harmonischen Referenz und erscheinen vollstaendig im Fehlersignal.
-"""
-
 from pathlib import Path
 
 import numpy as np

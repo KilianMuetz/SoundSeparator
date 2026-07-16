@@ -1,25 +1,3 @@
-"""
-Matching Pursuit (Mallat & Zhang, 1993)
-Zerlegt das Signal greedy in Atome aus einem ueberkompletten Dictionary: in
-jedem Schritt wird das Atom mit der hoechsten Korrelation zum aktuellen
-Residuum gewaehlt, sein Beitrag abgezogen und der Vorgang wiederholt (sparse
-Approximation). Als Dictionary dienen Fourier-/Gabor-Atome (Sinuskomponenten);
-die Korrelation mit allen Atomen wird effizient per FFT berechnet.
-
-Tonale, drehzahlsynchrone Maschinen-Anteile werden von wenigen starken Atomen
-erfasst, breitbandiges Rauschen und Transienten nicht. Zuordnung ueber die
-Atom-Frequenz (konsistent mit VMD/NMF/EMD): Atome im Maschinenband
-(<= f_grenze) = Nutzschall, der Rest verbleibt im Stoerschall.
-
-Die Verarbeitung erfolgt blockweise mit Overlap-Add (Hann-Fenster, 50 %
-Ueberlappung): MP wird je Block gerechnet, die Blockergebnisse werden
-gefenstert ueberlappend zusammengesetzt und durch die Fenstersumme normiert.
-Dies vermeidet die hoerbaren Diskontinuitaeten ("Ticken") an harten
-Blockgrenzen.
-  Ns = Summe der Maschinenband-Atome            = Nutzschall
-  Hs = Residuum y - Ns                          = Stoerschall
-"""
-
 from pathlib import Path
 
 import numpy as np

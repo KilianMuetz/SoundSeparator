@@ -1,20 +1,3 @@
-"""
-Spectral Kurtosis (Antoni, 2006/2007)
-Kurtosis misst die "Spitzigkeit" einer Verteilung. Die Spectral Kurtosis
-berechnet sie pro Frequenzband ueber die Zeit: stationaeres (gauss'sches)
-Rauschen ergibt SK ~ 0, impulsive/transiente Ereignisse erzeugen hohe SK in
-genau den Baendern, in denen sie auftreten. SK findet impulsive Anteile also
-ohne Drehzahlwissen - ideal zur Lokalisierung transienter Stoerungen (Schlaege)
-in Maschinensignalen.
-
-Trennung in zwei Schritten (angelehnt an das Kurtogram-Prinzip):
-  1. SK je Frequenzband -> impulsive Baender (SK > sk_schwelle) auswaehlen
-  2. in diesen Baendern eine zeitliche Ausreisser-Maske (Energie > med + k*MAD)
-     -> erfasst WANN der Impuls auftritt, nicht nur in welchem Band
-  Ns = stationaerer Anteil                       = Nutzschall
-  Hs = impulsive Zeit-Frequenz-Bereiche          = Stoerschall
-"""
-
 from pathlib import Path
 
 import numpy as np

@@ -1,28 +1,3 @@
-"""
-RLS-ANC - Adaptive Noise Cancelling mit Recursive Least Squares
-Wie das LMS-basierte ANC nutzt dieses Verfahren eine synthetische, drehzahl-
-synchrone Referenz ([cos, sin] fuer f_r und Harmonische) und rekonstruiert
-adaptiv den drehzahlsynchronen Anteil. Statt des einfachen LMS-Gradienten-
-schritts wird der Filter per Recursive Least Squares aktualisiert: eine
-rekursive Matrixgleichung mit inverser Korrelationsmatrix P und Vergessens-
-faktor lambda minimiert den kumulierten quadratischen Fehler.
-
-RLS vs. LMS (der klassische Vergleich, vgl. Haykin, Adaptive Filter Theory):
-  + RLS konvergiert deutlich schneller und ist unempfindlich gegen die
-    Schrittweiten-Wahl, die LMS erschwert.
-  - RLS kostet O(M^2) pro Abtastwert statt O(M) und ist numerisch
-    empfindlicher: bei stark korrelierter (rein harmonischer) Referenz muss
-    lambda nahe 1 liegen (>= 0.9999), sonst divergiert die Rekursion.
-
-Hinweis zum Verhalten: Durch die sehr schnelle Anpassung legt RLS die Referenz
-nahezu momentanoptimal an; der als Nutzschall rekonstruierte Anteil faellt
-dadurch kleiner aus als bei LMS, waehrend Transienten vollstaendig im Fehler
-landen. Dieser Trade-off (schnelle Konvergenz vs. Selektivitaet/Rechenkosten)
-ist der eigentliche Erkenntniswert gegenueber dem LMS-ANC.
-  Ns = adaptiv rekonstruierter drehzahlsynchroner Anteil   = Nutzschall
-  Hs = Fehlersignal y - Ns                                 = Stoerschall
-"""
-
 from pathlib import Path
 
 import numpy as np

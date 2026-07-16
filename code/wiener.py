@@ -1,19 +1,3 @@
-"""
-Wiener-Filter (spektral, MMSE-optimal)
-Wendet pro Frequenzbin eine weiche, SNR-abhaengige Verstaerkung an:
-  G = xi / (1 + xi)        mit xi = a-priori-SNR
-Wo Nutzsignal dominiert (hohes SNR) laesst der Filter durch, wo Rauschen
-dominiert daempft er. Das a-priori-SNR wird ueber den Decision-Directed-Ansatz
-(Ephraim & Malah) aus der vorigen Schaetzung gebildet -> weniger Musical Noise
-als bei harter Spektralsubtraktion.
-
-Der Wiener-Gain ist einfacher als die MMSE-STSA-Verstaerkung (kein Bessel),
-liefert aber dieselbe weiche, komplementaere Zerlegung:
-  Ns = G * Y            (Anteil ueber dem Rauschpegel)   = Nutzschall
-  Hs = (1 - G) * Y      (unterdrueckter Anteil)          = Stoerschall
-Annahme: Am Anfang liegt ein reines Rauschsegment (Referenz) vor.
-"""
-
 from pathlib import Path
 
 import numpy as np

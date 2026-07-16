@@ -1,25 +1,3 @@
-"""
-EMD / EEMD / CEEMDAN - Empirical Mode Decomposition und Varianten
-  EMD     (Huang et al., 1998):      rein datengetriebene Zerlegung in
-          Intrinsic Mode Functions (IMFs) ueber iteratives Sifting.
-  EEMD    (Wu & Huang, 2009):        Ensemble-EMD - EMD mehrfach mit
-          zugefuegtem Rauschen, IMFs gemittelt -> mildert "Mode Mixing".
-  CEEMDAN (Torres et al., 2011):     Complete EEMD with Adaptive Noise -
-          fuegt das Rauschen adaptiv stufenweise hinzu, effizienter und mit
-          vollstaendiger Rekonstruktion gegenueber EEMD.
-
-Alle drei zerlegen ohne Frequenz-/Drehzahlwissen. Die Zuordnung erfolgt ueber
-den spektralen Schwerpunkt jeder IMF (konsistent mit VMD/NMF): IMFs im
-Maschinenband (<= f_grenze) = Nutzschall, hoeherfrequente = Stoerschall.
-Unter Windows laufen EEMD/CEEMDAN ohne Multiprocessing (parallel=False), da
-der spawn-Prozessstart sonst mit flachen Skripten kollidiert.
-
-Das gewaehlte Verfahren bestimmt Ausgabeordner und Dateinamen, damit sich die
-Ergebnisse der drei Varianten nicht ueberschreiben.
-  Ns = Summe der Maschinenband-IMFs   = Nutzschall
-  Hs = Summe der uebrigen IMFs        = Stoerschall
-"""
-
 from pathlib import Path
 
 import numpy as np

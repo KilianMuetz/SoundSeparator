@@ -1,18 +1,3 @@
-"""
-Auswertung der Zerlegungsguete (Option 1) je Verfahren am Referenzfile.
-
-Struktur:  sep/<methode>/<methode>Ns.wav  und  sep/<methode>/<methode>Hs.wav
-Das Skript durchsucht sep/ automatisch nach allen Methoden-Unterordnern.
-
-Bewertung gegen das Original  data/observ_1.wav:
-  eps_rek =  || y - (Ns + Hs) ||  /  || y ||          (Rekonstruktionsfehler)
-  rho     =  | corr(Ns, Hs) |                          (Komplementaritaet)
-
-Ein Verfahren trennt umso besser, je kleiner eps_rek (nichts verloren/erfunden)
-UND je kleiner rho (Ns und Hs enthalten unterschiedliche Anteile).
-Klassensieger = kleinstes rho innerhalb der Klasse bei eps_rek <= toleranz.
-"""
-
 from pathlib import Path
 import numpy as np
 import soundfile as sf
