@@ -31,8 +31,8 @@ import soundfile as sf
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/rls/RlsNs.wav"   # drehzahlsynchron
-ausgabe_hs = BASE / "../sep/rls/RlsHs.wav"   # Fehlersignal
+ausgabe_ns = BASE / "../sep/rls/rlsNS.wav"   # drehzahlsynchron
+ausgabe_hs = BASE / "../sep/rls/rlsHs.wav"   # Fehlersignal
 
 f_r = 48.0        # Grundfrequenz der Rotation in Hz
 H = 40            # Anzahl Harmonische in der Referenz

@@ -7,8 +7,8 @@ from scipy.signal import stft, istft
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/cepstrum/CepNs.wav"   # periodisch
-ausgabe_hs = BASE / "../sep/cepstrum/CepHs.wav"   # aperiodisch
+ausgabe_ns = BASE / "../sep/cepstrum/cepstrumNs.wav"   # periodisch
+ausgabe_hs = BASE / "../sep/cepstrum/cepstrumHs.wav"   # aperiodisch
 
 f_r = 48.0        # Grundfrequenz der Rotation in Hz (bestimmt die Grundquefrenz)
 breite = 3        # halbe Lifter-Breite je Rahmonic-Peak (Quefrenz-Bins)

@@ -7,8 +7,8 @@ from scipy.signal import stft, istft
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/nmf/NmfNs.wav"
-ausgabe_hs = BASE / "../sep/nmf/NmfHs.wav"
+ausgabe_ns = BASE / "../sep/nmf/nmf.wav"
+ausgabe_hs = BASE / "../sep/nmf/nmf.wav"
 
 f_grenze = 800.0  # Obergrenze des Maschinenbands in Hz (Zuordnungskriterium)
 K = 8             # Anzahl der Komponenten

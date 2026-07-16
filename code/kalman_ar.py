@@ -6,8 +6,8 @@ import soundfile as sf
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/kalman_ar/ArKalmanNs.wav"   # AR-modelliert
-ausgabe_hs = BASE / "../sep/kalman_ar/ArKalmanHs.wav"   # Residuum
+ausgabe_ns = BASE / "../sep/kalman_ar/kalman_arNs.wav"   # AR-modelliert
+ausgabe_hs = BASE / "../sep/kalman_ar/kalman_arHs.wav"   # Residuum
 
 p = 20                    # AR-Ordnung (hoeher = feinere Spektralstruktur)
 ref_ende_s = 1.0          # ruhiges Referenzsegment (nur Nutzschall) bis hier

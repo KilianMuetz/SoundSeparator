@@ -6,8 +6,8 @@ import soundfile as sf
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/statespace_em/StateSpaceNs.wav"
-ausgabe_hs = BASE / "../sep/statespace_em/StateSpaceHs.wav"
+ausgabe_ns = BASE / "../sep/statespace_em/statespace_emNs.wav"
+ausgabe_hs = BASE / "../sep/statespace_em/statespace_emHs.wav"
 
 dim = 20          # Zustandsdimension (AR-artige Modellordnung)
 n_em = 8          # Anzahl EM-Iterationen

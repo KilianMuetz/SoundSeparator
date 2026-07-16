@@ -6,8 +6,8 @@ import soundfile as sf
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/synchronous_averaging/SyncAvgNs.wav"   # synchron
-ausgabe_hs = BASE / "../sep/synchronous_averaging/SyncAvgHs.wav"   # asynchron
+ausgabe_ns = BASE / "../sep/synchronous_averaging/synchronous_averagingNs.wav"   # synchron
+ausgabe_hs = BASE / "../sep/synchronous_averaging/synchronous_averagingHs.wav"   # asynchron
 
 rpm_min, rpm_max = 500, 5000   # plausibler Suchbereich fuer die Drehzahl
 

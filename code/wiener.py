@@ -23,8 +23,8 @@ from scipy.signal import stft, istft
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/wiener/WienerNs.wav"   # Nutzschall
-ausgabe_hs = BASE / "../sep/wiener/WienerHs.wav"   # Hintergrundschall
+ausgabe_ns = BASE / "../sep/wiener/wienerNs.wav"   # Nutzschall
+ausgabe_hs = BASE / "../sep/wiener/wienerHs.wav"   # Hintergrundschall
 
 rauschreferenz_ende_s = 1.0   # erste Sekunde = Rauschreferenz
 alpha_dd = 0.98               # Decision-Directed-Glaettung

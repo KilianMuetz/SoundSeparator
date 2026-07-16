@@ -37,7 +37,7 @@ ensemble_trials = 50    # EEMD/CEEMDAN: Anzahl Rausch-Durchlaeufe
 
 # --- Ausgabepfade je Verfahren (kein gegenseitiges Ueberschreiben) ---
 ordner = {"EMD": "emd", "EEMD": "eemd", "CEEMDAN": "ceemdan"}[verfahren]
-praefix = {"EMD": "Emd", "EEMD": "Eemd", "CEEMDAN": "Ceemdan"}[verfahren]
+praefix = {"EMD": "emd", "EEMD": "eemd", "CEEMDAN": "ceemdan"}[verfahren]
 ausgabe_ns = BASE / f"../sep/{ordner}/{praefix}Ns.wav"
 ausgabe_hs = BASE / f"../sep/{ordner}/{praefix}Hs.wav"
 

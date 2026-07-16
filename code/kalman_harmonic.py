@@ -6,8 +6,8 @@ import soundfile as sf
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/kalman_harmonic/KalmanNs.wav"   # harmonischer Anteil
-ausgabe_hs = BASE / "../sep/kalman_harmonic/KalmanHs.wav"   # Residuum
+ausgabe_ns = BASE / "../sep/kalman_harmonic/kalman_harmonicNs.wav"   # harmonischer Anteil
+ausgabe_hs = BASE / "../sep/kalman_harmonic/kalman_harmonicHs.wav"   # Residuum
 
 f_r = 25.0        # Grundfrequenz der Rotation in Hz (= rpm/60)
 H = 20            # Anzahl getrackter Harmonischer

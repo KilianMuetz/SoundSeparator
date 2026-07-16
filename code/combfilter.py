@@ -7,8 +7,8 @@ from scipy.signal import stft, istft
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/combfilter/CombNs.wav"   # Harmonische = Nutzschall
-ausgabe_hs = BASE / "../sep/combfilter/CombHs.wav"   # Rest        = Stoerschall
+ausgabe_ns = BASE / "../sep/combfilter/combfilterNs.wav"   # Harmonische = Nutzschall
+ausgabe_hs = BASE / "../sep/combfilter/combfilterHs.wav"   # Rest        = Stoerschall
 
 f_r = 25.0            # Rotationsgrundfrequenz in Hz (= rpm/60)
 bandbreite = 4.0      # halbe Zahnbreite je Harmonische in Hz

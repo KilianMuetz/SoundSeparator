@@ -28,8 +28,8 @@ import soundfile as sf
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/matching_pursuit/MpNs.wav"
-ausgabe_hs = BASE / "../sep/matching_pursuit/MpHs.wav"
+ausgabe_ns = BASE / "../sep/matching_pursuit/matching_pursuitNs.wav"
+ausgabe_hs = BASE / "../sep/matching_pursuit/matching_pursuitHs.wav"
 
 f_grenze = 800.0    # Obergrenze des Maschinenbands in Hz (Atom-Zuordnung)
 n_atoms = 100       # Anzahl greedy gewaehlter Atome pro Block

@@ -8,8 +8,8 @@ from scipy.ndimage import median_filter
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_h = BASE / "../sep/hpss/HpssNs.wav"   # harmonisch = Maschinengeraeusch
-ausgabe_p = BASE / "../sep/hpss/HpssSs.wav"   # percussiv  = Schlaege
+ausgabe_h = BASE / "../sep/hpss/hpssNs.wav"   # harmonisch = Maschinengeraeusch
+ausgabe_p = BASE / "../sep/hpss/hpssHs.wav"   # percussiv  = Schlaege
 
 kernel_zeit = 51      # Medianfilter-Laenge entlang Zeit  (holt Harmonisches)
 kernel_freq = 17      # Medianfilter-Laenge entlang Frequenz (holt Percussives)

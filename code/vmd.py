@@ -7,8 +7,8 @@ from scipy.signal import find_peaks
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/vmd/VmdNs.wav"
-ausgabe_hs = BASE / "../sep/vmd/VmdHs.wav"
+ausgabe_ns = BASE / "../sep/vmd/vmdNs.wav"
+ausgabe_hs = BASE / "../sep/vmd/vmdHs.wav"
 
 f_grenze = 800.0  # Obergrenze des Maschinenbands in Hz (Zuordnungskriterium)
 K = 6             # Anzahl der Moden

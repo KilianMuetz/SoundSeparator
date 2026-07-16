@@ -6,8 +6,8 @@ import soundfile as sf
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/ssa/SsaNs.wav"   # stationaer
-ausgabe_hs = BASE / "../sep/ssa/SsaHs.wav"   # Residuum
+ausgabe_ns = BASE / "../sep/ssa/ssaNs.wav"   # stationaer
+ausgabe_hs = BASE / "../sep/ssa/ssaHs.wav"   # Residuum
 
 L = 300           # Fensterlaenge (Einbettungsdimension)
 r = 5             # Anzahl fuehrender Komponenten -> Nutzschall

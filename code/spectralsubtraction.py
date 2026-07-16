@@ -7,8 +7,8 @@ from scipy.signal import stft, istft
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/spectralsubtraction/SpecSubNs.wav"
-ausgabe_hs = BASE / "../sep/spectralsubtraction/SpecSubHs.wav"
+ausgabe_ns = BASE / "../sep/spectralsubtraction/spectralsubtractionNs.wav"
+ausgabe_hs = BASE / "../sep/spectralsubtraction/spectralsubtractionHs.wav"
 
 rauschreferenz_ende_s = 1.0   # erste Sekunde = Rauschreferenz
 alpha = 2.0                   # Oversubtraction-Faktor

@@ -8,8 +8,8 @@ from scipy.signal import stft, istft, find_peaks
 # --- Parameter (Werte fuer Musik nach Baumann Tab. S. 94) ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/konturierung/KonturNs.wav"   # tonal
-ausgabe_hs = BASE / "../sep/konturierung/KonturHs.wav"   # geraeuschhaft
+ausgabe_ns = BASE / "../sep/konturierung/konturierungNs.wav"   # tonal
+ausgabe_hs = BASE / "../sep/konturierung/konturierungHs.wav"   # geraeuschhaft
 
 delta_f_cent = 80.0     # max. Frequenzunterschied benachbarter TT (Cent)
 delta_l_db = 6.0        # max. Pegelunterschied benachbarter TT (dB)

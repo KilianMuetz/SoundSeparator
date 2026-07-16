@@ -7,8 +7,8 @@ from scipy.signal import stft, istft
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/cyclostationary/CycloNs.wav"   # zyklostationaer
-ausgabe_hs = BASE / "../sep/cyclostationary/CycloHs.wav"   # residual
+ausgabe_ns = BASE / "../sep/cyclostationary/cyclostationaryoNs.wav"   # zyklostationaer
+ausgabe_hs = BASE / "../sep/cyclostationary/cyclostationaryHs.wav"   # residual
 
 f_r = 25.0            # Zyklusfrequenz (Rotationsgrundfrequenz) in Hz
 n_harmonische = 5     # Anzahl beruecksichtigter Zyklus-Harmonischer

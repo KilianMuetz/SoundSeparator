@@ -8,8 +8,8 @@ from scipy.special import i0e, i1e   # exponentiell skalierte Besselfunktionen
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/mmse_stsa/MmseStsaNs.wav"   # Nutzschall
-ausgabe_hs = BASE / "../sep/mmse_stsa/MmseStsaHs.wav"   # Hintergrundschall
+ausgabe_ns = BASE / "../sep/mmse_stsa/mmse_stsaNs.wav"   # Nutzschall
+ausgabe_hs = BASE / "../sep/mmse_stsa/mmse_stsaHs.wav"   # Hintergrundschall
 
 rauschreferenz_ende_s = 1.0   # erste Sekunde = Rauschreferenz
 alpha_dd = 0.98               # Decision-Directed-Glaettung (typ. 0.98)

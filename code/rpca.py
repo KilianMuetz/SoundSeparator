@@ -7,8 +7,8 @@ from scipy.signal import stft, istft
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/rpca/RpcaNs.wav"   # low-rank = Nutzschall
-ausgabe_hs = BASE / "../sep/rpca/RpcaHs.wav"   # sparse   = Stoerschall
+ausgabe_ns = BASE / "../sep/rpca/rpcaNs.wav"   # low-rank = Nutzschall
+ausgabe_hs = BASE / "../sep/rpca/rpcaHs.wav"   # sparse   = Stoerschall
 
 lam = None        # Sparse-Gewicht (None -> 1/sqrt(max(m,n)) nach Candes)
 tol = 1e-7        # Konvergenzschwelle

@@ -24,8 +24,8 @@ from scipy.signal import stft, istft
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/spectral_kurtosis/SkNs.wav"   # stationaer
-ausgabe_hs = BASE / "../sep/spectral_kurtosis/SkHs.wav"   # impulsiv
+ausgabe_ns = BASE / "../sep/spectral_kurtosis/spectral_kurtosisNs.wav"   # stationaer
+ausgabe_hs = BASE / "../sep/spectral_kurtosis/spectral_kurtosisHs.wav"   # impulsiv
 
 sk_schwelle = 1.0     # SK-Grenze: darueber gilt ein Band als impulsiv
 mad_faktor = 3.0      # zeitlicher Ausreisser: Energie > median + k*MAD

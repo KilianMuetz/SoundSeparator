@@ -7,8 +7,8 @@ import pywt
 # --- Parameter ---
 BASE = Path(__file__).parent
 eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/wavelet/WaveletNs.wav"   # stationaer
-ausgabe_hs = BASE / "../sep/wavelet/WaveletHs.wav"   # transient
+ausgabe_ns = BASE / "../sep/wavelet/waveletNs.wav"   # stationaer
+ausgabe_hs = BASE / "../sep/wavelet/waveletHs.wav"   # transient
 
 wavelet = "db8"   # Daubechies-8 (guter Kompromiss Zeit/Frequenz)
 level = 6         # Zerlegungstiefe
