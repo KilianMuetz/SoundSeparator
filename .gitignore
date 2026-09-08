@@ -2,3 +2,4 @@ data/set/normalzustand.wav
 venv/
 __pycache__/
 *.pyc
+*.pdf
