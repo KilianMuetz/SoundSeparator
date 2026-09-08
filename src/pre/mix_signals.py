@@ -13,8 +13,22 @@ from pathlib import Path
 import json
 
 TARGET_DURATION = 10.0   # Sekunden, durch kuerzeste Anomalie-Aufnahme (11.9s) begrenzt
+TARGET_PEAK = 0.9  # normalisierter Ziel-Peak (relative Amplitude, <1.0 als Clipping-Puffer)
 ONSET_S = 2.0             # Startzeit transienter Events innerhalb des Mix
 SNR_DB = 0.0              # Ziel-SNR Nutzschall vs. Stoerquelle (RMS-basiert)
+
+def load_mono(path, sr_target=44100):
+    audio, sr = sf.read(path, always_2d=False)
+    if audio.ndim > 1:
+        audio = audio.mean(axis=1)
+    assert sr == sr_target, f"{path}: Samplerate {sr} != {sr_target}"
+    audio = audio.astype(np.float64)
+
+    peak = np.max(np.abs(audio))
+    if peak > 0:
+        audio = audio / peak * TARGET_PEAK
+
+    return audio
 
 NUTZSCHALL = {
     "normal":       ("normalzustand.wav", None),        # Offset wird zufaellig/fix gewaehlt
