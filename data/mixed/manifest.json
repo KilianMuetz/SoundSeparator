@@ -1,0 +1,590 @@
+[
+  {
+    "mix_id": "M001",
+    "nutzschall": "normal",
+    "stoerquelle": "tuerschlaege",
+    "snr_db": 0.0,
+    "file": "M001_normal_tuerschlaege.wav"
+  },
+  {
+    "mix_id": "M002",
+    "nutzschall": "normal",
+    "stoerquelle": "metallhammer",
+    "snr_db": 0.0,
+    "file": "M002_normal_metallhammer.wav"
+  },
+  {
+    "mix_id": "M003",
+    "nutzschall": "normal",
+    "stoerquelle": "gespraech",
+    "snr_db": 0.0,
+    "file": "M003_normal_gespraech.wav"
+  },
+  {
+    "mix_id": "M004",
+    "nutzschall": "normal",
+    "stoerquelle": "kraehe",
+    "snr_db": 0.0,
+    "file": "M004_normal_kraehe.wav"
+  },
+  {
+    "mix_id": "M005",
+    "nutzschall": "normal",
+    "stoerquelle": "voegel",
+    "snr_db": 0.0,
+    "file": "M005_normal_voegel.wav"
+  },
+  {
+    "mix_id": "M006",
+    "nutzschall": "normal",
+    "stoerquelle": "kuh",
+    "snr_db": 0.0,
+    "file": "M006_normal_kuh.wav"
+  },
+  {
+    "mix_id": "M007",
+    "nutzschall": "normal",
+    "stoerquelle": "alarm",
+    "snr_db": 0.0,
+    "file": "M007_normal_alarm.wav"
+  },
+  {
+    "mix_id": "M008",
+    "nutzschall": "normal",
+    "stoerquelle": "hupe",
+    "snr_db": 0.0,
+    "file": "M008_normal_hupe.wav"
+  },
+  {
+    "mix_id": "M009",
+    "nutzschall": "normal",
+    "stoerquelle": "radio",
+    "snr_db": 0.0,
+    "file": "M009_normal_radio.wav"
+  },
+  {
+    "mix_id": "M010",
+    "nutzschall": "normal",
+    "stoerquelle": "verkehr",
+    "snr_db": 0.0,
+    "file": "M010_normal_verkehr.wav"
+  },
+  {
+    "mix_id": "M011",
+    "nutzschall": "normal",
+    "stoerquelle": "akku_konstant",
+    "snr_db": 0.0,
+    "file": "M011_normal_akku_konstant.wav"
+  },
+  {
+    "mix_id": "M012",
+    "nutzschall": "normal",
+    "stoerquelle": "akku_dynamisch",
+    "snr_db": 0.0,
+    "file": "M012_normal_akku_dynamisch.wav"
+  },
+  {
+    "mix_id": "M013",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "tuerschlaege",
+    "snr_db": 0.0,
+    "file": "M013_a1_leicht_tuerschlaege.wav"
+  },
+  {
+    "mix_id": "M014",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "metallhammer",
+    "snr_db": 0.0,
+    "file": "M014_a1_leicht_metallhammer.wav"
+  },
+  {
+    "mix_id": "M015",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "gespraech",
+    "snr_db": 0.0,
+    "file": "M015_a1_leicht_gespraech.wav"
+  },
+  {
+    "mix_id": "M016",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "kraehe",
+    "snr_db": 0.0,
+    "file": "M016_a1_leicht_kraehe.wav"
+  },
+  {
+    "mix_id": "M017",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "voegel",
+    "snr_db": 0.0,
+    "file": "M017_a1_leicht_voegel.wav"
+  },
+  {
+    "mix_id": "M018",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "kuh",
+    "snr_db": 0.0,
+    "file": "M018_a1_leicht_kuh.wav"
+  },
+  {
+    "mix_id": "M019",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "alarm",
+    "snr_db": 0.0,
+    "file": "M019_a1_leicht_alarm.wav"
+  },
+  {
+    "mix_id": "M020",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "hupe",
+    "snr_db": 0.0,
+    "file": "M020_a1_leicht_hupe.wav"
+  },
+  {
+    "mix_id": "M021",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "radio",
+    "snr_db": 0.0,
+    "file": "M021_a1_leicht_radio.wav"
+  },
+  {
+    "mix_id": "M022",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "verkehr",
+    "snr_db": 0.0,
+    "file": "M022_a1_leicht_verkehr.wav"
+  },
+  {
+    "mix_id": "M023",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "akku_konstant",
+    "snr_db": 0.0,
+    "file": "M023_a1_leicht_akku_konstant.wav"
+  },
+  {
+    "mix_id": "M024",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "akku_dynamisch",
+    "snr_db": 0.0,
+    "file": "M024_a1_leicht_akku_dynamisch.wav"
+  },
+  {
+    "mix_id": "M025",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "tuerschlaege",
+    "snr_db": 0.0,
+    "file": "M025_a1_stark_tuerschlaege.wav"
+  },
+  {
+    "mix_id": "M026",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "metallhammer",
+    "snr_db": 0.0,
+    "file": "M026_a1_stark_metallhammer.wav"
+  },
+  {
+    "mix_id": "M027",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "gespraech",
+    "snr_db": 0.0,
+    "file": "M027_a1_stark_gespraech.wav"
+  },
+  {
+    "mix_id": "M028",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "kraehe",
+    "snr_db": 0.0,
+    "file": "M028_a1_stark_kraehe.wav"
+  },
+  {
+    "mix_id": "M029",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "voegel",
+    "snr_db": 0.0,
+    "file": "M029_a1_stark_voegel.wav"
+  },
+  {
+    "mix_id": "M030",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "kuh",
+    "snr_db": 0.0,
+    "file": "M030_a1_stark_kuh.wav"
+  },
+  {
+    "mix_id": "M031",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "alarm",
+    "snr_db": 0.0,
+    "file": "M031_a1_stark_alarm.wav"
+  },
+  {
+    "mix_id": "M032",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "hupe",
+    "snr_db": 0.0,
+    "file": "M032_a1_stark_hupe.wav"
+  },
+  {
+    "mix_id": "M033",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "radio",
+    "snr_db": 0.0,
+    "file": "M033_a1_stark_radio.wav"
+  },
+  {
+    "mix_id": "M034",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "verkehr",
+    "snr_db": 0.0,
+    "file": "M034_a1_stark_verkehr.wav"
+  },
+  {
+    "mix_id": "M035",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "akku_konstant",
+    "snr_db": 0.0,
+    "file": "M035_a1_stark_akku_konstant.wav"
+  },
+  {
+    "mix_id": "M036",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "akku_dynamisch",
+    "snr_db": 0.0,
+    "file": "M036_a1_stark_akku_dynamisch.wav"
+  },
+  {
+    "mix_id": "M037",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "tuerschlaege",
+    "snr_db": 0.0,
+    "file": "M037_a2_leicht_tuerschlaege.wav"
+  },
+  {
+    "mix_id": "M038",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "metallhammer",
+    "snr_db": 0.0,
+    "file": "M038_a2_leicht_metallhammer.wav"
+  },
+  {
+    "mix_id": "M039",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "gespraech",
+    "snr_db": 0.0,
+    "file": "M039_a2_leicht_gespraech.wav"
+  },
+  {
+    "mix_id": "M040",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "kraehe",
+    "snr_db": 0.0,
+    "file": "M040_a2_leicht_kraehe.wav"
+  },
+  {
+    "mix_id": "M041",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "voegel",
+    "snr_db": 0.0,
+    "file": "M041_a2_leicht_voegel.wav"
+  },
+  {
+    "mix_id": "M042",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "kuh",
+    "snr_db": 0.0,
+    "file": "M042_a2_leicht_kuh.wav"
+  },
+  {
+    "mix_id": "M043",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "alarm",
+    "snr_db": 0.0,
+    "file": "M043_a2_leicht_alarm.wav"
+  },
+  {
+    "mix_id": "M044",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "hupe",
+    "snr_db": 0.0,
+    "file": "M044_a2_leicht_hupe.wav"
+  },
+  {
+    "mix_id": "M045",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "radio",
+    "snr_db": 0.0,
+    "file": "M045_a2_leicht_radio.wav"
+  },
+  {
+    "mix_id": "M046",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "verkehr",
+    "snr_db": 0.0,
+    "file": "M046_a2_leicht_verkehr.wav"
+  },
+  {
+    "mix_id": "M047",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "akku_konstant",
+    "snr_db": 0.0,
+    "file": "M047_a2_leicht_akku_konstant.wav"
+  },
+  {
+    "mix_id": "M048",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "akku_dynamisch",
+    "snr_db": 0.0,
+    "file": "M048_a2_leicht_akku_dynamisch.wav"
+  },
+  {
+    "mix_id": "M049",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "tuerschlaege",
+    "snr_db": 0.0,
+    "file": "M049_a2_deutlich_tuerschlaege.wav"
+  },
+  {
+    "mix_id": "M050",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "metallhammer",
+    "snr_db": 0.0,
+    "file": "M050_a2_deutlich_metallhammer.wav"
+  },
+  {
+    "mix_id": "M051",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "gespraech",
+    "snr_db": 0.0,
+    "file": "M051_a2_deutlich_gespraech.wav"
+  },
+  {
+    "mix_id": "M052",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "kraehe",
+    "snr_db": 0.0,
+    "file": "M052_a2_deutlich_kraehe.wav"
+  },
+  {
+    "mix_id": "M053",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "voegel",
+    "snr_db": 0.0,
+    "file": "M053_a2_deutlich_voegel.wav"
+  },
+  {
+    "mix_id": "M054",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "kuh",
+    "snr_db": 0.0,
+    "file": "M054_a2_deutlich_kuh.wav"
+  },
+  {
+    "mix_id": "M055",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "alarm",
+    "snr_db": 0.0,
+    "file": "M055_a2_deutlich_alarm.wav"
+  },
+  {
+    "mix_id": "M056",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "hupe",
+    "snr_db": 0.0,
+    "file": "M056_a2_deutlich_hupe.wav"
+  },
+  {
+    "mix_id": "M057",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "radio",
+    "snr_db": 0.0,
+    "file": "M057_a2_deutlich_radio.wav"
+  },
+  {
+    "mix_id": "M058",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "verkehr",
+    "snr_db": 0.0,
+    "file": "M058_a2_deutlich_verkehr.wav"
+  },
+  {
+    "mix_id": "M059",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "akku_konstant",
+    "snr_db": 0.0,
+    "file": "M059_a2_deutlich_akku_konstant.wav"
+  },
+  {
+    "mix_id": "M060",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "akku_dynamisch",
+    "snr_db": 0.0,
+    "file": "M060_a2_deutlich_akku_dynamisch.wav"
+  },
+  {
+    "mix_id": "M061",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "tuerschlaege",
+    "snr_db": 0.0,
+    "file": "M061_a3_leicht_tuerschlaege.wav"
+  },
+  {
+    "mix_id": "M062",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "metallhammer",
+    "snr_db": 0.0,
+    "file": "M062_a3_leicht_metallhammer.wav"
+  },
+  {
+    "mix_id": "M063",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "gespraech",
+    "snr_db": 0.0,
+    "file": "M063_a3_leicht_gespraech.wav"
+  },
+  {
+    "mix_id": "M064",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "kraehe",
+    "snr_db": 0.0,
+    "file": "M064_a3_leicht_kraehe.wav"
+  },
+  {
+    "mix_id": "M065",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "voegel",
+    "snr_db": 0.0,
+    "file": "M065_a3_leicht_voegel.wav"
+  },
+  {
+    "mix_id": "M066",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "kuh",
+    "snr_db": 0.0,
+    "file": "M066_a3_leicht_kuh.wav"
+  },
+  {
+    "mix_id": "M067",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "alarm",
+    "snr_db": 0.0,
+    "file": "M067_a3_leicht_alarm.wav"
+  },
+  {
+    "mix_id": "M068",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "hupe",
+    "snr_db": 0.0,
+    "file": "M068_a3_leicht_hupe.wav"
+  },
+  {
+    "mix_id": "M069",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "radio",
+    "snr_db": 0.0,
+    "file": "M069_a3_leicht_radio.wav"
+  },
+  {
+    "mix_id": "M070",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "verkehr",
+    "snr_db": 0.0,
+    "file": "M070_a3_leicht_verkehr.wav"
+  },
+  {
+    "mix_id": "M071",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "akku_konstant",
+    "snr_db": 0.0,
+    "file": "M071_a3_leicht_akku_konstant.wav"
+  },
+  {
+    "mix_id": "M072",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "akku_dynamisch",
+    "snr_db": 0.0,
+    "file": "M072_a3_leicht_akku_dynamisch.wav"
+  },
+  {
+    "mix_id": "M073",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "tuerschlaege",
+    "snr_db": 0.0,
+    "file": "M073_a3_deutlich_tuerschlaege.wav"
+  },
+  {
+    "mix_id": "M074",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "metallhammer",
+    "snr_db": 0.0,
+    "file": "M074_a3_deutlich_metallhammer.wav"
+  },
+  {
+    "mix_id": "M075",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "gespraech",
+    "snr_db": 0.0,
+    "file": "M075_a3_deutlich_gespraech.wav"
+  },
+  {
+    "mix_id": "M076",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "kraehe",
+    "snr_db": 0.0,
+    "file": "M076_a3_deutlich_kraehe.wav"
+  },
+  {
+    "mix_id": "M077",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "voegel",
+    "snr_db": 0.0,
+    "file": "M077_a3_deutlich_voegel.wav"
+  },
+  {
+    "mix_id": "M078",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "kuh",
+    "snr_db": 0.0,
+    "file": "M078_a3_deutlich_kuh.wav"
+  },
+  {
+    "mix_id": "M079",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "alarm",
+    "snr_db": 0.0,
+    "file": "M079_a3_deutlich_alarm.wav"
+  },
+  {
+    "mix_id": "M080",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "hupe",
+    "snr_db": 0.0,
+    "file": "M080_a3_deutlich_hupe.wav"
+  },
+  {
+    "mix_id": "M081",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "radio",
+    "snr_db": 0.0,
+    "file": "M081_a3_deutlich_radio.wav"
+  },
+  {
+    "mix_id": "M082",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "verkehr",
+    "snr_db": 0.0,
+    "file": "M082_a3_deutlich_verkehr.wav"
+  },
+  {
+    "mix_id": "M083",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "akku_konstant",
+    "snr_db": 0.0,
+    "file": "M083_a3_deutlich_akku_konstant.wav"
+  },
+  {
+    "mix_id": "M084",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "akku_dynamisch",
+    "snr_db": 0.0,
+    "file": "M084_a3_deutlich_akku_dynamisch.wav"
+  }
+]
