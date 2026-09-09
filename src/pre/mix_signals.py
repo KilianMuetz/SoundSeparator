@@ -92,12 +92,14 @@ def build_mix(nutz_path, stoer_path, stoer_type, sr=44100):
     nutz = trim_window(nutz, sr, TARGET_DURATION, offset=0.0)
 
     stoer_full = load_mono(stoer_path, sr)
+    stoer = np.zeros(int(TARGET_DURATION * sr))
+    onset_n = int(ONSET_S * sr)
+    rest_n = len(stoer) - onset_n
+
     if stoer_type == "continuous":
-        stoer = trim_window(stoer_full, sr, TARGET_DURATION, offset=0.0)
-    else:  # transient: Event bei ONSET_S einsetzen, Rest Stille
-        stoer = np.zeros(int(TARGET_DURATION * sr))
-        onset_n = int(ONSET_S * sr)
-        event_n = min(len(stoer_full), len(stoer) - onset_n)
+        stoer[onset_n:] = trim_window(stoer_full, sr, rest_n / sr, offset=0.0)
+    else:  # transient: Einzelereignis, Rest bleibt Nutzschall pur
+        event_n = min(len(stoer_full), rest_n)
         stoer[onset_n:onset_n + event_n] = stoer_full[:event_n]
 
     return mix_at_snr(nutz, stoer, SNR_DB)
