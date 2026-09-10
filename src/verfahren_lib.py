@@ -6,9 +6,10 @@ Jede Funktion hat die Signatur  trenne(y, sr) -> (ns, hs)
   hs = geschaetzter Stoerschall (Rest)
 Es gilt stets  len(ns) == len(hs) == len(y).
 
-Die zuordnenden Verfahren nutzen die ersten REFERENZ_S Sekunden jedes
-Mischsignals als Referenz des Maschinengrundgeraeusches. Der Stoerschall
-setzt im Experiment erst bei 2,0 s ein.
+Die zuordnenden Verfahren schaetzen das stationaere Grundspektrum blind
+aus dem Mischsignal selbst (Perzentil je Frequenzband ueber alle Frames,
+vereinfachte Minimum-Statistics-Schaetzung). Sie erhalten damit keine
+zusaetzliche Information ueber die Quelle.
 """
 
 import numpy as np
@@ -22,8 +23,8 @@ NOVERLAP = 512
 EPS = 1e-12
 
 # --- Gemeinsame Verfahrensparameter ---
-REFERENZ_S = 1.9      # Referenzfenster Maschinengrundgeraeusch (vor Stoereinsatz bei 2,0 s)
-SIM_SCHWELLE = 0.6    # Mindestaehnlichkeit einer Komponente zum Referenzspektrum
+PERZENTIL = 20        # Perzentil je Frequenzband fuer die blinde Grundspektrumschaetzung
+SIM_SCHWELLE = 0.6    # Mindestaehnlichkeit einer Komponente zum Grundspektrum
 
 
 def _stft(y, sr):
@@ -37,6 +38,21 @@ def _istft(mag, phase, sr, n):
     if len(x) < n:
         x = np.concatenate([x, np.zeros(n - len(x))])
     return x
+
+
+def _grundspektrum(Y_mag):
+    """Blinde Schaetzung des stationaeren Grundspektrums aus dem Mischsignal.
+
+    Perzentil je Frequenzband ueber alle Frames: kurzzeitige Ereignisse
+    heben das Perzentil kaum an, dauerhaft vorhandene Anteile bestimmen es.
+    """
+    return np.percentile(Y_mag, PERZENTIL, axis=1, keepdims=True)
+
+
+def _mittelspektrum(x, sr):
+    """Mittleres Betragsspektrum eines Signals auf demselben Frequenzraster."""
+    _, _, mag, _ = _stft(x, sr)
+    return mag.mean(axis=1)
 
 
 def _aehnlichkeit(spektren, referenz):
@@ -85,14 +101,13 @@ def wiener(y, sr, alpha_dd=0.98, xi_min=10 ** (-25 / 10)):
     f, t, Y_mag, Y_phase = _stft(y, sr)
     Y_pow = Y_mag ** 2
 
-    ref = t <= REFERENZ_S
-    maschinen_pow = np.mean(Y_pow[:, ref], axis=1, keepdims=True) + EPS
+    grund_pow = _grundspektrum(Y_mag) ** 2 + EPS
 
     Hs_mag = np.zeros_like(Y_mag)
     prev_amp = Y_mag[:, [0]]
     for k in range(Y_mag.shape[1]):
-        gamma = Y_pow[:, [k]] / maschinen_pow
-        xi = alpha_dd * (prev_amp ** 2 / maschinen_pow) \
+        gamma = Y_pow[:, [k]] / grund_pow
+        xi = alpha_dd * (prev_amp ** 2 / grund_pow) \
              + (1 - alpha_dd) * np.maximum(gamma - 1, 0)
         xi = np.maximum(xi, xi_min)
         gain = xi / (1 + xi)
@@ -103,14 +118,13 @@ def wiener(y, sr, alpha_dd=0.98, xi_min=10 ** (-25 / 10)):
     return _istft(Ns_mag, Y_phase, sr, len(y)), _istft(Hs_mag, Y_phase, sr, len(y))
 
 
-def spektralsubtraktion(y, sr, alpha=2.0, beta=0.02):
+def spektralsubtraktion(y, sr, alpha=1.0, beta=0.02):
     """Spektralsubtraktion (Boll 1979). Harte Subtraktion mit Spectral Floor."""
     f, t, Y_mag, Y_phase = _stft(y, sr)
 
-    ref = t <= REFERENZ_S
-    maschinen_mag = np.mean(Y_mag[:, ref], axis=1, keepdims=True)
+    grund_mag = _grundspektrum(Y_mag)
 
-    Hs_mag = np.maximum(Y_mag - alpha * maschinen_mag, beta * Y_mag)
+    Hs_mag = np.maximum(Y_mag - alpha * grund_mag, beta * Y_mag)
     Ns_mag = Y_mag - Hs_mag
     return _istft(Ns_mag, Y_phase, sr, len(y)), _istft(Hs_mag, Y_phase, sr, len(y))
 
@@ -120,14 +134,13 @@ def mmse_stsa(y, sr, alpha_dd=0.98, xi_min=10 ** (-25 / 10)):
     f, t, Y_mag, Y_phase = _stft(y, sr)
     Y_pow = Y_mag ** 2
 
-    ref = t <= REFERENZ_S
-    maschinen_pow = np.mean(Y_pow[:, ref], axis=1, keepdims=True) + EPS
+    grund_pow = _grundspektrum(Y_mag) ** 2 + EPS
 
     Hs_mag = np.zeros_like(Y_mag)
     prev_amp = Y_mag[:, [0]]
     for k in range(Y_mag.shape[1]):
-        gamma = Y_pow[:, [k]] / maschinen_pow
-        xi = alpha_dd * (prev_amp ** 2 / maschinen_pow) \
+        gamma = Y_pow[:, [k]] / grund_pow
+        xi = alpha_dd * (prev_amp ** 2 / grund_pow) \
              + (1 - alpha_dd) * np.maximum(gamma - 1, 0)
         xi = np.maximum(xi, xi_min)
 
@@ -160,10 +173,11 @@ def nmf(y, sr, K=8, n_iter=300, seed=0):
         WH = W @ H + EPS
         W *= ((V / WH) @ H.T) / (ones @ H.T + EPS)
 
-    referenz = V[:, t <= REFERENZ_S].mean(axis=1)
-    ist_nutz = _aehnlichkeit(W, referenz) >= SIM_SCHWELLE
+    referenz = _grundspektrum(V).ravel()
+    sim = _aehnlichkeit(W, referenz)
+    ist_nutz = sim >= SIM_SCHWELLE
     if not ist_nutz.any():
-        ist_nutz[np.argmax(_aehnlichkeit(W, referenz))] = True
+        ist_nutz[np.argmax(sim)] = True
 
     WH_ges = W @ H + EPS
     Ns_mag = (W[:, ist_nutz] @ H[ist_nutz]) / WH_ges * V
@@ -220,13 +234,14 @@ def emd(y, sr, max_imf=10):
     from PyEMD import EMD as _EMD
 
     imfs = _EMD().emd(y, max_imf=max_imf)
-    n_ref = int(REFERENZ_S * sr)
 
-    referenz = np.abs(np.fft.rfft(y[:n_ref]))
-    spektren = np.column_stack([np.abs(np.fft.rfft(imf[:n_ref])) for imf in imfs])
-    ist_nutz = _aehnlichkeit(spektren, referenz) >= SIM_SCHWELLE
+    _, _, Y_mag, _ = _stft(y, sr)
+    referenz = _grundspektrum(Y_mag).ravel()
+    spektren = np.column_stack([_mittelspektrum(imf, sr) for imf in imfs])
+    sim = _aehnlichkeit(spektren, referenz)
+    ist_nutz = sim >= SIM_SCHWELLE
     if not ist_nutz.any():
-        ist_nutz[np.argmax(_aehnlichkeit(spektren, referenz))] = True
+        ist_nutz[np.argmax(sim)] = True
 
     ns = imfs[ist_nutz].sum(axis=0)
     hs = imfs[~ist_nutz].sum(axis=0)
@@ -238,7 +253,7 @@ def emd(y, sr, max_imf=10):
 VERFAHREN = {
     "synchronous_averaging": synchrone_mittelung,
     "wiener": wiener,
-    "spectralsubtraktion": spektralsubtraktion,
+    "spectralsubtraction": spektralsubtraktion,
     "mmse_stsa": mmse_stsa,
     "nmf": nmf,
     "hpss": hpss,

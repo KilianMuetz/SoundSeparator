@@ -15,7 +15,8 @@ Zusaetzlich wird das unbearbeitete Mischsignal als Referenz ausgewertet
 Anomalieerkennung ueberhaupt verbessert.
 
 Merkmale: 20 MFCCs je Frame (25 ms Fenster, 10 ms Versatz).
-Bewertung: mittlerer Anomaliescore ueber alle Frames eines Segments.
+Bewertung: mittlerer Anomaliescore ueber alle Frames eines Segments,
+gemittelt ueber mehrere Isolation-Forest-Initialisierungen.
 
 Aufruf:  python src/detect.py
 """
@@ -47,7 +48,7 @@ N_MFCC = 20        # in Abstimmung mit Roewaplan
 N_FFT = 512
 WIN_LENGTH = 400   # 25 ms
 HOP_LENGTH = 160   # 10 ms
-SEED = 0
+SEEDS = [0, 1, 2, 3, 4]   # Mittelung ueber mehrere Isolation-Forest-Initialisierungen
 
 
 def merkmale(y):
@@ -92,20 +93,39 @@ for verfahren in ["roh"] + list(vl.VERFAHREN):
     np.savez_compressed(merkmal_dir / f"{verfahren}.npz",
                         **{e["mix_id"]: x for e, x in zip(manifest, X)})
 
-    # --- Training auf den Normaldaten des Trainingsbereichs ---
+    # --- Training auf den Normaldaten des Trainingsbereichs, ueber Seeds gemittelt ---
     X_train = np.vstack([X[i] for i in train_idx])
     skalierer = StandardScaler().fit(X_train)
-    modell = IsolationForest(random_state=SEED, n_estimators=100)
-    modell.fit(skalierer.transform(X_train))
+    X_train_s = skalierer.transform(X_train)
 
-    # --- Bewertung der Testsegmente ---
-    scores = {i: float(np.mean(-modell.score_samples(skalierer.transform(X[i]))))
-              for i in test_idx}
+    scores_je_seed = []
+    aucs = []
+    for seed in SEEDS:
+        modell = IsolationForest(random_state=seed, n_estimators=100)
+        modell.fit(X_train_s)
+        s = {i: float(np.mean(-modell.score_samples(skalierer.transform(X[i]))))
+             for i in test_idx}
+        scores_je_seed.append(s)
+        aucs.append(roc_auc_score([labels[i] for i in test_idx],
+                                  [s[i] for i in test_idx]))
 
-    auc = roc_auc_score([labels[i] for i in test_idx],
-                        [scores[i] for i in test_idx])
-    zusammenfassung.append({"verfahren": verfahren, "auc": round(auc, 4)})
-    print(f"{verfahren:24s} AUC = {auc:.4f}")
+    scores = {i: float(np.mean([s[i] for s in scores_je_seed])) for i in test_idx}
+
+    # --- Diagnose: kollabierte Normalscores deuten auf ein Datenleck hin ---
+    norm = np.array([scores[i] for i in test_idx if labels[i] == 0])
+    anom = np.array([scores[i] for i in test_idx if labels[i] == 1])
+
+    zusammenfassung.append({
+        "verfahren": verfahren,
+        "auc": round(float(np.mean(aucs)), 4),
+        "auc_std": round(float(np.std(aucs)), 4),
+        "score_normal": round(float(norm.mean()), 4),
+        "streuung_normal": round(float(norm.std()), 4),
+        "score_anomal": round(float(anom.mean()), 4),
+        "streuung_anomal": round(float(anom.std()), 4),
+    })
+    print(f"{verfahren:24s} AUC = {np.mean(aucs):.4f} +- {np.std(aucs):.4f}   "
+          f"Streuung normal {norm.std():.4f}")
 
     for i in test_idx:
         e = manifest[i]
@@ -126,7 +146,7 @@ with open(protokoll_dir / "erkennung.csv", "w", newline="", encoding="utf-8") as
     schreiber.writerows(zeilen)
 
 with open(protokoll_dir / "erkennung_auc.csv", "w", newline="", encoding="utf-8") as f:
-    schreiber = csv.DictWriter(f, fieldnames=["verfahren", "auc"])
+    schreiber = csv.DictWriter(f, fieldnames=list(zusammenfassung[0].keys()))
     schreiber.writeheader()
     schreiber.writerows(zusammenfassung)
 

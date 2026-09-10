@@ -1,7 +1,7 @@
 """
 apply_methods.py — Wendet alle ausgewaehlten Trennverfahren auf alle Mischsignale an.
 
-Vollstaendige Kombination: 84 Mischsignale x 8 Verfahren = 672 Trennungen.
+Vollstaendige Kombination: 228 Mischsignale x 8 Verfahren = 1824 Trennungen.
 Ergebnis je Verfahren und Mischsignal:
   ergebnisse/getrennt/<verfahren>/<mix_id>_Ns.wav und ..._Hs.wav
 
@@ -31,7 +31,7 @@ protokoll = BASE / "ergebnisse" / "protokoll" / "verfahrensanwendung.csv"
 # --- Parameter ---
 SR_ZIEL = 16000     # Abtastrate des SIPREMA-Edge-Devices
 SR_QUELLE = 44100
-UEBERSPRINGEN = True   # bereits vorhandene Ergebnisse nicht neu berechnen
+UEBERSPRINGEN = True   # bereits protokollierte Ergebnisse nicht neu berechnen
 
 
 def rms(x):
@@ -44,6 +44,14 @@ with open(mix_dir / "manifest.json", encoding="utf-8") as f:
 
 print(f"{len(manifest)} Mischsignale x {len(vl.VERFAHREN)} Verfahren "
       f"= {len(manifest) * len(vl.VERFAHREN)} Trennungen\n")
+
+# --- Bereits protokollierte Trennungen einlesen (Wiederaufsetzen nach Abbruch) ---
+fertig = set()
+if protokoll.exists():
+    with open(protokoll, newline="", encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            fertig.add((r["mix_id"], r["verfahren"]))
+    print(f"{len(fertig)} Trennungen bereits protokolliert, werden uebersprungen.\n")
 
 zeilen = []
 t_start = time.time()
@@ -60,7 +68,8 @@ for i, eintrag in enumerate(manifest, 1):
         ziel_ns = getrennt_dir / verfahren / f"{mix_id}_Ns.wav"
         ziel_hs = getrennt_dir / verfahren / f"{mix_id}_Hs.wav"
 
-        if UEBERSPRINGEN and ziel_ns.exists() and ziel_hs.exists():
+        if UEBERSPRINGEN and (mix_id, verfahren) in fertig \
+                and ziel_ns.exists() and ziel_hs.exists():
             continue
 
         t0 = time.time()

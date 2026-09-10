@@ -1,0 +1,2282 @@
+[
+  {
+    "mix_id": "M001",
+    "nutzschall": "normal",
+    "stoerquelle": "tuerschlaege",
+    "segment": 1,
+    "offset_s": 25.52,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M001_normal_tuerschlaege_s1.wav"
+  },
+  {
+    "mix_id": "M002",
+    "nutzschall": "normal",
+    "stoerquelle": "tuerschlaege",
+    "segment": 2,
+    "offset_s": 178.64,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M002_normal_tuerschlaege_s2.wav"
+  },
+  {
+    "mix_id": "M003",
+    "nutzschall": "normal",
+    "stoerquelle": "tuerschlaege",
+    "segment": 3,
+    "offset_s": 331.76,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M003_normal_tuerschlaege_s3.wav"
+  },
+  {
+    "mix_id": "M004",
+    "nutzschall": "normal",
+    "stoerquelle": "tuerschlaege",
+    "segment": 4,
+    "offset_s": 484.88,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M004_normal_tuerschlaege_s4.wav"
+  },
+  {
+    "mix_id": "M005",
+    "nutzschall": "normal",
+    "stoerquelle": "tuerschlaege",
+    "segment": 5,
+    "offset_s": 842.16,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M005_normal_tuerschlaege_s5.wav"
+  },
+  {
+    "mix_id": "M006",
+    "nutzschall": "normal",
+    "stoerquelle": "tuerschlaege",
+    "segment": 6,
+    "offset_s": 1020.8,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M006_normal_tuerschlaege_s6.wav"
+  },
+  {
+    "mix_id": "M007",
+    "nutzschall": "normal",
+    "stoerquelle": "tuerschlaege",
+    "segment": 7,
+    "offset_s": 1199.44,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M007_normal_tuerschlaege_s7.wav"
+  },
+  {
+    "mix_id": "M008",
+    "nutzschall": "normal",
+    "stoerquelle": "metallhammer",
+    "segment": 1,
+    "offset_s": 25.52,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M008_normal_metallhammer_s1.wav"
+  },
+  {
+    "mix_id": "M009",
+    "nutzschall": "normal",
+    "stoerquelle": "metallhammer",
+    "segment": 2,
+    "offset_s": 178.64,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M009_normal_metallhammer_s2.wav"
+  },
+  {
+    "mix_id": "M010",
+    "nutzschall": "normal",
+    "stoerquelle": "metallhammer",
+    "segment": 3,
+    "offset_s": 331.76,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M010_normal_metallhammer_s3.wav"
+  },
+  {
+    "mix_id": "M011",
+    "nutzschall": "normal",
+    "stoerquelle": "metallhammer",
+    "segment": 4,
+    "offset_s": 484.88,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M011_normal_metallhammer_s4.wav"
+  },
+  {
+    "mix_id": "M012",
+    "nutzschall": "normal",
+    "stoerquelle": "metallhammer",
+    "segment": 5,
+    "offset_s": 842.16,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M012_normal_metallhammer_s5.wav"
+  },
+  {
+    "mix_id": "M013",
+    "nutzschall": "normal",
+    "stoerquelle": "metallhammer",
+    "segment": 6,
+    "offset_s": 1020.8,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M013_normal_metallhammer_s6.wav"
+  },
+  {
+    "mix_id": "M014",
+    "nutzschall": "normal",
+    "stoerquelle": "metallhammer",
+    "segment": 7,
+    "offset_s": 1199.44,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M014_normal_metallhammer_s7.wav"
+  },
+  {
+    "mix_id": "M015",
+    "nutzschall": "normal",
+    "stoerquelle": "gespraech",
+    "segment": 1,
+    "offset_s": 25.52,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M015_normal_gespraech_s1.wav"
+  },
+  {
+    "mix_id": "M016",
+    "nutzschall": "normal",
+    "stoerquelle": "gespraech",
+    "segment": 2,
+    "offset_s": 178.64,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M016_normal_gespraech_s2.wav"
+  },
+  {
+    "mix_id": "M017",
+    "nutzschall": "normal",
+    "stoerquelle": "gespraech",
+    "segment": 3,
+    "offset_s": 331.76,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M017_normal_gespraech_s3.wav"
+  },
+  {
+    "mix_id": "M018",
+    "nutzschall": "normal",
+    "stoerquelle": "gespraech",
+    "segment": 4,
+    "offset_s": 484.88,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M018_normal_gespraech_s4.wav"
+  },
+  {
+    "mix_id": "M019",
+    "nutzschall": "normal",
+    "stoerquelle": "gespraech",
+    "segment": 5,
+    "offset_s": 842.16,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M019_normal_gespraech_s5.wav"
+  },
+  {
+    "mix_id": "M020",
+    "nutzschall": "normal",
+    "stoerquelle": "gespraech",
+    "segment": 6,
+    "offset_s": 1020.8,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M020_normal_gespraech_s6.wav"
+  },
+  {
+    "mix_id": "M021",
+    "nutzschall": "normal",
+    "stoerquelle": "gespraech",
+    "segment": 7,
+    "offset_s": 1199.44,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M021_normal_gespraech_s7.wav"
+  },
+  {
+    "mix_id": "M022",
+    "nutzschall": "normal",
+    "stoerquelle": "kraehe",
+    "segment": 1,
+    "offset_s": 25.52,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M022_normal_kraehe_s1.wav"
+  },
+  {
+    "mix_id": "M023",
+    "nutzschall": "normal",
+    "stoerquelle": "kraehe",
+    "segment": 2,
+    "offset_s": 178.64,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M023_normal_kraehe_s2.wav"
+  },
+  {
+    "mix_id": "M024",
+    "nutzschall": "normal",
+    "stoerquelle": "kraehe",
+    "segment": 3,
+    "offset_s": 331.76,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M024_normal_kraehe_s3.wav"
+  },
+  {
+    "mix_id": "M025",
+    "nutzschall": "normal",
+    "stoerquelle": "kraehe",
+    "segment": 4,
+    "offset_s": 484.88,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M025_normal_kraehe_s4.wav"
+  },
+  {
+    "mix_id": "M026",
+    "nutzschall": "normal",
+    "stoerquelle": "kraehe",
+    "segment": 5,
+    "offset_s": 842.16,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M026_normal_kraehe_s5.wav"
+  },
+  {
+    "mix_id": "M027",
+    "nutzschall": "normal",
+    "stoerquelle": "kraehe",
+    "segment": 6,
+    "offset_s": 1020.8,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M027_normal_kraehe_s6.wav"
+  },
+  {
+    "mix_id": "M028",
+    "nutzschall": "normal",
+    "stoerquelle": "kraehe",
+    "segment": 7,
+    "offset_s": 1199.44,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M028_normal_kraehe_s7.wav"
+  },
+  {
+    "mix_id": "M029",
+    "nutzschall": "normal",
+    "stoerquelle": "voegel",
+    "segment": 1,
+    "offset_s": 25.52,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M029_normal_voegel_s1.wav"
+  },
+  {
+    "mix_id": "M030",
+    "nutzschall": "normal",
+    "stoerquelle": "voegel",
+    "segment": 2,
+    "offset_s": 178.64,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M030_normal_voegel_s2.wav"
+  },
+  {
+    "mix_id": "M031",
+    "nutzschall": "normal",
+    "stoerquelle": "voegel",
+    "segment": 3,
+    "offset_s": 331.76,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M031_normal_voegel_s3.wav"
+  },
+  {
+    "mix_id": "M032",
+    "nutzschall": "normal",
+    "stoerquelle": "voegel",
+    "segment": 4,
+    "offset_s": 484.88,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M032_normal_voegel_s4.wav"
+  },
+  {
+    "mix_id": "M033",
+    "nutzschall": "normal",
+    "stoerquelle": "voegel",
+    "segment": 5,
+    "offset_s": 842.16,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M033_normal_voegel_s5.wav"
+  },
+  {
+    "mix_id": "M034",
+    "nutzschall": "normal",
+    "stoerquelle": "voegel",
+    "segment": 6,
+    "offset_s": 1020.8,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M034_normal_voegel_s6.wav"
+  },
+  {
+    "mix_id": "M035",
+    "nutzschall": "normal",
+    "stoerquelle": "voegel",
+    "segment": 7,
+    "offset_s": 1199.44,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M035_normal_voegel_s7.wav"
+  },
+  {
+    "mix_id": "M036",
+    "nutzschall": "normal",
+    "stoerquelle": "kuh",
+    "segment": 1,
+    "offset_s": 25.52,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M036_normal_kuh_s1.wav"
+  },
+  {
+    "mix_id": "M037",
+    "nutzschall": "normal",
+    "stoerquelle": "kuh",
+    "segment": 2,
+    "offset_s": 178.64,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M037_normal_kuh_s2.wav"
+  },
+  {
+    "mix_id": "M038",
+    "nutzschall": "normal",
+    "stoerquelle": "kuh",
+    "segment": 3,
+    "offset_s": 331.76,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M038_normal_kuh_s3.wav"
+  },
+  {
+    "mix_id": "M039",
+    "nutzschall": "normal",
+    "stoerquelle": "kuh",
+    "segment": 4,
+    "offset_s": 484.88,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M039_normal_kuh_s4.wav"
+  },
+  {
+    "mix_id": "M040",
+    "nutzschall": "normal",
+    "stoerquelle": "kuh",
+    "segment": 5,
+    "offset_s": 842.16,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M040_normal_kuh_s5.wav"
+  },
+  {
+    "mix_id": "M041",
+    "nutzschall": "normal",
+    "stoerquelle": "kuh",
+    "segment": 6,
+    "offset_s": 1020.8,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M041_normal_kuh_s6.wav"
+  },
+  {
+    "mix_id": "M042",
+    "nutzschall": "normal",
+    "stoerquelle": "kuh",
+    "segment": 7,
+    "offset_s": 1199.44,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M042_normal_kuh_s7.wav"
+  },
+  {
+    "mix_id": "M043",
+    "nutzschall": "normal",
+    "stoerquelle": "alarm",
+    "segment": 1,
+    "offset_s": 25.52,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M043_normal_alarm_s1.wav"
+  },
+  {
+    "mix_id": "M044",
+    "nutzschall": "normal",
+    "stoerquelle": "alarm",
+    "segment": 2,
+    "offset_s": 178.64,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M044_normal_alarm_s2.wav"
+  },
+  {
+    "mix_id": "M045",
+    "nutzschall": "normal",
+    "stoerquelle": "alarm",
+    "segment": 3,
+    "offset_s": 331.76,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M045_normal_alarm_s3.wav"
+  },
+  {
+    "mix_id": "M046",
+    "nutzschall": "normal",
+    "stoerquelle": "alarm",
+    "segment": 4,
+    "offset_s": 484.88,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M046_normal_alarm_s4.wav"
+  },
+  {
+    "mix_id": "M047",
+    "nutzschall": "normal",
+    "stoerquelle": "alarm",
+    "segment": 5,
+    "offset_s": 842.16,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M047_normal_alarm_s5.wav"
+  },
+  {
+    "mix_id": "M048",
+    "nutzschall": "normal",
+    "stoerquelle": "alarm",
+    "segment": 6,
+    "offset_s": 1020.8,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M048_normal_alarm_s6.wav"
+  },
+  {
+    "mix_id": "M049",
+    "nutzschall": "normal",
+    "stoerquelle": "alarm",
+    "segment": 7,
+    "offset_s": 1199.44,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M049_normal_alarm_s7.wav"
+  },
+  {
+    "mix_id": "M050",
+    "nutzschall": "normal",
+    "stoerquelle": "hupe",
+    "segment": 1,
+    "offset_s": 25.52,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M050_normal_hupe_s1.wav"
+  },
+  {
+    "mix_id": "M051",
+    "nutzschall": "normal",
+    "stoerquelle": "hupe",
+    "segment": 2,
+    "offset_s": 178.64,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M051_normal_hupe_s2.wav"
+  },
+  {
+    "mix_id": "M052",
+    "nutzschall": "normal",
+    "stoerquelle": "hupe",
+    "segment": 3,
+    "offset_s": 331.76,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M052_normal_hupe_s3.wav"
+  },
+  {
+    "mix_id": "M053",
+    "nutzschall": "normal",
+    "stoerquelle": "hupe",
+    "segment": 4,
+    "offset_s": 484.88,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M053_normal_hupe_s4.wav"
+  },
+  {
+    "mix_id": "M054",
+    "nutzschall": "normal",
+    "stoerquelle": "hupe",
+    "segment": 5,
+    "offset_s": 842.16,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M054_normal_hupe_s5.wav"
+  },
+  {
+    "mix_id": "M055",
+    "nutzschall": "normal",
+    "stoerquelle": "hupe",
+    "segment": 6,
+    "offset_s": 1020.8,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M055_normal_hupe_s6.wav"
+  },
+  {
+    "mix_id": "M056",
+    "nutzschall": "normal",
+    "stoerquelle": "hupe",
+    "segment": 7,
+    "offset_s": 1199.44,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M056_normal_hupe_s7.wav"
+  },
+  {
+    "mix_id": "M057",
+    "nutzschall": "normal",
+    "stoerquelle": "radio",
+    "segment": 1,
+    "offset_s": 25.52,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M057_normal_radio_s1.wav"
+  },
+  {
+    "mix_id": "M058",
+    "nutzschall": "normal",
+    "stoerquelle": "radio",
+    "segment": 2,
+    "offset_s": 178.64,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M058_normal_radio_s2.wav"
+  },
+  {
+    "mix_id": "M059",
+    "nutzschall": "normal",
+    "stoerquelle": "radio",
+    "segment": 3,
+    "offset_s": 331.76,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M059_normal_radio_s3.wav"
+  },
+  {
+    "mix_id": "M060",
+    "nutzschall": "normal",
+    "stoerquelle": "radio",
+    "segment": 4,
+    "offset_s": 484.88,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M060_normal_radio_s4.wav"
+  },
+  {
+    "mix_id": "M061",
+    "nutzschall": "normal",
+    "stoerquelle": "radio",
+    "segment": 5,
+    "offset_s": 842.16,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M061_normal_radio_s5.wav"
+  },
+  {
+    "mix_id": "M062",
+    "nutzschall": "normal",
+    "stoerquelle": "radio",
+    "segment": 6,
+    "offset_s": 1020.8,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M062_normal_radio_s6.wav"
+  },
+  {
+    "mix_id": "M063",
+    "nutzschall": "normal",
+    "stoerquelle": "radio",
+    "segment": 7,
+    "offset_s": 1199.44,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M063_normal_radio_s7.wav"
+  },
+  {
+    "mix_id": "M064",
+    "nutzschall": "normal",
+    "stoerquelle": "verkehr",
+    "segment": 1,
+    "offset_s": 25.52,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M064_normal_verkehr_s1.wav"
+  },
+  {
+    "mix_id": "M065",
+    "nutzschall": "normal",
+    "stoerquelle": "verkehr",
+    "segment": 2,
+    "offset_s": 178.64,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M065_normal_verkehr_s2.wav"
+  },
+  {
+    "mix_id": "M066",
+    "nutzschall": "normal",
+    "stoerquelle": "verkehr",
+    "segment": 3,
+    "offset_s": 331.76,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M066_normal_verkehr_s3.wav"
+  },
+  {
+    "mix_id": "M067",
+    "nutzschall": "normal",
+    "stoerquelle": "verkehr",
+    "segment": 4,
+    "offset_s": 484.88,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M067_normal_verkehr_s4.wav"
+  },
+  {
+    "mix_id": "M068",
+    "nutzschall": "normal",
+    "stoerquelle": "verkehr",
+    "segment": 5,
+    "offset_s": 842.16,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M068_normal_verkehr_s5.wav"
+  },
+  {
+    "mix_id": "M069",
+    "nutzschall": "normal",
+    "stoerquelle": "verkehr",
+    "segment": 6,
+    "offset_s": 1020.8,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M069_normal_verkehr_s6.wav"
+  },
+  {
+    "mix_id": "M070",
+    "nutzschall": "normal",
+    "stoerquelle": "verkehr",
+    "segment": 7,
+    "offset_s": 1199.44,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M070_normal_verkehr_s7.wav"
+  },
+  {
+    "mix_id": "M071",
+    "nutzschall": "normal",
+    "stoerquelle": "akku_konstant",
+    "segment": 1,
+    "offset_s": 25.52,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M071_normal_akku_konstant_s1.wav"
+  },
+  {
+    "mix_id": "M072",
+    "nutzschall": "normal",
+    "stoerquelle": "akku_konstant",
+    "segment": 2,
+    "offset_s": 178.64,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M072_normal_akku_konstant_s2.wav"
+  },
+  {
+    "mix_id": "M073",
+    "nutzschall": "normal",
+    "stoerquelle": "akku_konstant",
+    "segment": 3,
+    "offset_s": 331.76,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M073_normal_akku_konstant_s3.wav"
+  },
+  {
+    "mix_id": "M074",
+    "nutzschall": "normal",
+    "stoerquelle": "akku_konstant",
+    "segment": 4,
+    "offset_s": 484.88,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M074_normal_akku_konstant_s4.wav"
+  },
+  {
+    "mix_id": "M075",
+    "nutzschall": "normal",
+    "stoerquelle": "akku_konstant",
+    "segment": 5,
+    "offset_s": 842.16,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M075_normal_akku_konstant_s5.wav"
+  },
+  {
+    "mix_id": "M076",
+    "nutzschall": "normal",
+    "stoerquelle": "akku_konstant",
+    "segment": 6,
+    "offset_s": 1020.8,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M076_normal_akku_konstant_s6.wav"
+  },
+  {
+    "mix_id": "M077",
+    "nutzschall": "normal",
+    "stoerquelle": "akku_konstant",
+    "segment": 7,
+    "offset_s": 1199.44,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M077_normal_akku_konstant_s7.wav"
+  },
+  {
+    "mix_id": "M078",
+    "nutzschall": "normal",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 1,
+    "offset_s": 25.52,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M078_normal_akku_dynamisch_s1.wav"
+  },
+  {
+    "mix_id": "M079",
+    "nutzschall": "normal",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 2,
+    "offset_s": 178.64,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M079_normal_akku_dynamisch_s2.wav"
+  },
+  {
+    "mix_id": "M080",
+    "nutzschall": "normal",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 3,
+    "offset_s": 331.76,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M080_normal_akku_dynamisch_s3.wav"
+  },
+  {
+    "mix_id": "M081",
+    "nutzschall": "normal",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 4,
+    "offset_s": 484.88,
+    "rolle": "train",
+    "snr_db": 0.0,
+    "file": "M081_normal_akku_dynamisch_s4.wav"
+  },
+  {
+    "mix_id": "M082",
+    "nutzschall": "normal",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 5,
+    "offset_s": 842.16,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M082_normal_akku_dynamisch_s5.wav"
+  },
+  {
+    "mix_id": "M083",
+    "nutzschall": "normal",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 6,
+    "offset_s": 1020.8,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M083_normal_akku_dynamisch_s6.wav"
+  },
+  {
+    "mix_id": "M084",
+    "nutzschall": "normal",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 7,
+    "offset_s": 1199.44,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M084_normal_akku_dynamisch_s7.wav"
+  },
+  {
+    "mix_id": "M085",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "tuerschlaege",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M085_a1_leicht_tuerschlaege_s1.wav"
+  },
+  {
+    "mix_id": "M086",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "tuerschlaege",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M086_a1_leicht_tuerschlaege_s2.wav"
+  },
+  {
+    "mix_id": "M087",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "metallhammer",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M087_a1_leicht_metallhammer_s1.wav"
+  },
+  {
+    "mix_id": "M088",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "metallhammer",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M088_a1_leicht_metallhammer_s2.wav"
+  },
+  {
+    "mix_id": "M089",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "gespraech",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M089_a1_leicht_gespraech_s1.wav"
+  },
+  {
+    "mix_id": "M090",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "gespraech",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M090_a1_leicht_gespraech_s2.wav"
+  },
+  {
+    "mix_id": "M091",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "kraehe",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M091_a1_leicht_kraehe_s1.wav"
+  },
+  {
+    "mix_id": "M092",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "kraehe",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M092_a1_leicht_kraehe_s2.wav"
+  },
+  {
+    "mix_id": "M093",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "voegel",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M093_a1_leicht_voegel_s1.wav"
+  },
+  {
+    "mix_id": "M094",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "voegel",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M094_a1_leicht_voegel_s2.wav"
+  },
+  {
+    "mix_id": "M095",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "kuh",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M095_a1_leicht_kuh_s1.wav"
+  },
+  {
+    "mix_id": "M096",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "kuh",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M096_a1_leicht_kuh_s2.wav"
+  },
+  {
+    "mix_id": "M097",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "alarm",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M097_a1_leicht_alarm_s1.wav"
+  },
+  {
+    "mix_id": "M098",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "alarm",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M098_a1_leicht_alarm_s2.wav"
+  },
+  {
+    "mix_id": "M099",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "hupe",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M099_a1_leicht_hupe_s1.wav"
+  },
+  {
+    "mix_id": "M100",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "hupe",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M100_a1_leicht_hupe_s2.wav"
+  },
+  {
+    "mix_id": "M101",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "radio",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M101_a1_leicht_radio_s1.wav"
+  },
+  {
+    "mix_id": "M102",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "radio",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M102_a1_leicht_radio_s2.wav"
+  },
+  {
+    "mix_id": "M103",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "verkehr",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M103_a1_leicht_verkehr_s1.wav"
+  },
+  {
+    "mix_id": "M104",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "verkehr",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M104_a1_leicht_verkehr_s2.wav"
+  },
+  {
+    "mix_id": "M105",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "akku_konstant",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M105_a1_leicht_akku_konstant_s1.wav"
+  },
+  {
+    "mix_id": "M106",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "akku_konstant",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M106_a1_leicht_akku_konstant_s2.wav"
+  },
+  {
+    "mix_id": "M107",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M107_a1_leicht_akku_dynamisch_s1.wav"
+  },
+  {
+    "mix_id": "M108",
+    "nutzschall": "a1_leicht",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M108_a1_leicht_akku_dynamisch_s2.wav"
+  },
+  {
+    "mix_id": "M109",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "tuerschlaege",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M109_a1_stark_tuerschlaege_s1.wav"
+  },
+  {
+    "mix_id": "M110",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "tuerschlaege",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M110_a1_stark_tuerschlaege_s2.wav"
+  },
+  {
+    "mix_id": "M111",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "metallhammer",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M111_a1_stark_metallhammer_s1.wav"
+  },
+  {
+    "mix_id": "M112",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "metallhammer",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M112_a1_stark_metallhammer_s2.wav"
+  },
+  {
+    "mix_id": "M113",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "gespraech",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M113_a1_stark_gespraech_s1.wav"
+  },
+  {
+    "mix_id": "M114",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "gespraech",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M114_a1_stark_gespraech_s2.wav"
+  },
+  {
+    "mix_id": "M115",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "kraehe",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M115_a1_stark_kraehe_s1.wav"
+  },
+  {
+    "mix_id": "M116",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "kraehe",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M116_a1_stark_kraehe_s2.wav"
+  },
+  {
+    "mix_id": "M117",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "voegel",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M117_a1_stark_voegel_s1.wav"
+  },
+  {
+    "mix_id": "M118",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "voegel",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M118_a1_stark_voegel_s2.wav"
+  },
+  {
+    "mix_id": "M119",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "kuh",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M119_a1_stark_kuh_s1.wav"
+  },
+  {
+    "mix_id": "M120",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "kuh",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M120_a1_stark_kuh_s2.wav"
+  },
+  {
+    "mix_id": "M121",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "alarm",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M121_a1_stark_alarm_s1.wav"
+  },
+  {
+    "mix_id": "M122",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "alarm",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M122_a1_stark_alarm_s2.wav"
+  },
+  {
+    "mix_id": "M123",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "hupe",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M123_a1_stark_hupe_s1.wav"
+  },
+  {
+    "mix_id": "M124",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "hupe",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M124_a1_stark_hupe_s2.wav"
+  },
+  {
+    "mix_id": "M125",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "radio",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M125_a1_stark_radio_s1.wav"
+  },
+  {
+    "mix_id": "M126",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "radio",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M126_a1_stark_radio_s2.wav"
+  },
+  {
+    "mix_id": "M127",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "verkehr",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M127_a1_stark_verkehr_s1.wav"
+  },
+  {
+    "mix_id": "M128",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "verkehr",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M128_a1_stark_verkehr_s2.wav"
+  },
+  {
+    "mix_id": "M129",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "akku_konstant",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M129_a1_stark_akku_konstant_s1.wav"
+  },
+  {
+    "mix_id": "M130",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "akku_konstant",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M130_a1_stark_akku_konstant_s2.wav"
+  },
+  {
+    "mix_id": "M131",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M131_a1_stark_akku_dynamisch_s1.wav"
+  },
+  {
+    "mix_id": "M132",
+    "nutzschall": "a1_stark",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M132_a1_stark_akku_dynamisch_s2.wav"
+  },
+  {
+    "mix_id": "M133",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "tuerschlaege",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M133_a2_leicht_tuerschlaege_s1.wav"
+  },
+  {
+    "mix_id": "M134",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "tuerschlaege",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M134_a2_leicht_tuerschlaege_s2.wav"
+  },
+  {
+    "mix_id": "M135",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "metallhammer",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M135_a2_leicht_metallhammer_s1.wav"
+  },
+  {
+    "mix_id": "M136",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "metallhammer",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M136_a2_leicht_metallhammer_s2.wav"
+  },
+  {
+    "mix_id": "M137",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "gespraech",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M137_a2_leicht_gespraech_s1.wav"
+  },
+  {
+    "mix_id": "M138",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "gespraech",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M138_a2_leicht_gespraech_s2.wav"
+  },
+  {
+    "mix_id": "M139",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "kraehe",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M139_a2_leicht_kraehe_s1.wav"
+  },
+  {
+    "mix_id": "M140",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "kraehe",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M140_a2_leicht_kraehe_s2.wav"
+  },
+  {
+    "mix_id": "M141",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "voegel",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M141_a2_leicht_voegel_s1.wav"
+  },
+  {
+    "mix_id": "M142",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "voegel",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M142_a2_leicht_voegel_s2.wav"
+  },
+  {
+    "mix_id": "M143",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "kuh",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M143_a2_leicht_kuh_s1.wav"
+  },
+  {
+    "mix_id": "M144",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "kuh",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M144_a2_leicht_kuh_s2.wav"
+  },
+  {
+    "mix_id": "M145",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "alarm",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M145_a2_leicht_alarm_s1.wav"
+  },
+  {
+    "mix_id": "M146",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "alarm",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M146_a2_leicht_alarm_s2.wav"
+  },
+  {
+    "mix_id": "M147",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "hupe",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M147_a2_leicht_hupe_s1.wav"
+  },
+  {
+    "mix_id": "M148",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "hupe",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M148_a2_leicht_hupe_s2.wav"
+  },
+  {
+    "mix_id": "M149",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "radio",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M149_a2_leicht_radio_s1.wav"
+  },
+  {
+    "mix_id": "M150",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "radio",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M150_a2_leicht_radio_s2.wav"
+  },
+  {
+    "mix_id": "M151",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "verkehr",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M151_a2_leicht_verkehr_s1.wav"
+  },
+  {
+    "mix_id": "M152",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "verkehr",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M152_a2_leicht_verkehr_s2.wav"
+  },
+  {
+    "mix_id": "M153",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "akku_konstant",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M153_a2_leicht_akku_konstant_s1.wav"
+  },
+  {
+    "mix_id": "M154",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "akku_konstant",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M154_a2_leicht_akku_konstant_s2.wav"
+  },
+  {
+    "mix_id": "M155",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M155_a2_leicht_akku_dynamisch_s1.wav"
+  },
+  {
+    "mix_id": "M156",
+    "nutzschall": "a2_leicht",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M156_a2_leicht_akku_dynamisch_s2.wav"
+  },
+  {
+    "mix_id": "M157",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "tuerschlaege",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M157_a2_deutlich_tuerschlaege_s1.wav"
+  },
+  {
+    "mix_id": "M158",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "tuerschlaege",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M158_a2_deutlich_tuerschlaege_s2.wav"
+  },
+  {
+    "mix_id": "M159",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "metallhammer",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M159_a2_deutlich_metallhammer_s1.wav"
+  },
+  {
+    "mix_id": "M160",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "metallhammer",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M160_a2_deutlich_metallhammer_s2.wav"
+  },
+  {
+    "mix_id": "M161",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "gespraech",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M161_a2_deutlich_gespraech_s1.wav"
+  },
+  {
+    "mix_id": "M162",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "gespraech",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M162_a2_deutlich_gespraech_s2.wav"
+  },
+  {
+    "mix_id": "M163",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "kraehe",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M163_a2_deutlich_kraehe_s1.wav"
+  },
+  {
+    "mix_id": "M164",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "kraehe",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M164_a2_deutlich_kraehe_s2.wav"
+  },
+  {
+    "mix_id": "M165",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "voegel",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M165_a2_deutlich_voegel_s1.wav"
+  },
+  {
+    "mix_id": "M166",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "voegel",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M166_a2_deutlich_voegel_s2.wav"
+  },
+  {
+    "mix_id": "M167",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "kuh",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M167_a2_deutlich_kuh_s1.wav"
+  },
+  {
+    "mix_id": "M168",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "kuh",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M168_a2_deutlich_kuh_s2.wav"
+  },
+  {
+    "mix_id": "M169",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "alarm",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M169_a2_deutlich_alarm_s1.wav"
+  },
+  {
+    "mix_id": "M170",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "alarm",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M170_a2_deutlich_alarm_s2.wav"
+  },
+  {
+    "mix_id": "M171",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "hupe",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M171_a2_deutlich_hupe_s1.wav"
+  },
+  {
+    "mix_id": "M172",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "hupe",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M172_a2_deutlich_hupe_s2.wav"
+  },
+  {
+    "mix_id": "M173",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "radio",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M173_a2_deutlich_radio_s1.wav"
+  },
+  {
+    "mix_id": "M174",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "radio",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M174_a2_deutlich_radio_s2.wav"
+  },
+  {
+    "mix_id": "M175",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "verkehr",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M175_a2_deutlich_verkehr_s1.wav"
+  },
+  {
+    "mix_id": "M176",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "verkehr",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M176_a2_deutlich_verkehr_s2.wav"
+  },
+  {
+    "mix_id": "M177",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "akku_konstant",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M177_a2_deutlich_akku_konstant_s1.wav"
+  },
+  {
+    "mix_id": "M178",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "akku_konstant",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M178_a2_deutlich_akku_konstant_s2.wav"
+  },
+  {
+    "mix_id": "M179",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M179_a2_deutlich_akku_dynamisch_s1.wav"
+  },
+  {
+    "mix_id": "M180",
+    "nutzschall": "a2_deutlich",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M180_a2_deutlich_akku_dynamisch_s2.wav"
+  },
+  {
+    "mix_id": "M181",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "tuerschlaege",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M181_a3_leicht_tuerschlaege_s1.wav"
+  },
+  {
+    "mix_id": "M182",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "tuerschlaege",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M182_a3_leicht_tuerschlaege_s2.wav"
+  },
+  {
+    "mix_id": "M183",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "metallhammer",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M183_a3_leicht_metallhammer_s1.wav"
+  },
+  {
+    "mix_id": "M184",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "metallhammer",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M184_a3_leicht_metallhammer_s2.wav"
+  },
+  {
+    "mix_id": "M185",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "gespraech",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M185_a3_leicht_gespraech_s1.wav"
+  },
+  {
+    "mix_id": "M186",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "gespraech",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M186_a3_leicht_gespraech_s2.wav"
+  },
+  {
+    "mix_id": "M187",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "kraehe",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M187_a3_leicht_kraehe_s1.wav"
+  },
+  {
+    "mix_id": "M188",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "kraehe",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M188_a3_leicht_kraehe_s2.wav"
+  },
+  {
+    "mix_id": "M189",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "voegel",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M189_a3_leicht_voegel_s1.wav"
+  },
+  {
+    "mix_id": "M190",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "voegel",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M190_a3_leicht_voegel_s2.wav"
+  },
+  {
+    "mix_id": "M191",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "kuh",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M191_a3_leicht_kuh_s1.wav"
+  },
+  {
+    "mix_id": "M192",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "kuh",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M192_a3_leicht_kuh_s2.wav"
+  },
+  {
+    "mix_id": "M193",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "alarm",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M193_a3_leicht_alarm_s1.wav"
+  },
+  {
+    "mix_id": "M194",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "alarm",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M194_a3_leicht_alarm_s2.wav"
+  },
+  {
+    "mix_id": "M195",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "hupe",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M195_a3_leicht_hupe_s1.wav"
+  },
+  {
+    "mix_id": "M196",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "hupe",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M196_a3_leicht_hupe_s2.wav"
+  },
+  {
+    "mix_id": "M197",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "radio",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M197_a3_leicht_radio_s1.wav"
+  },
+  {
+    "mix_id": "M198",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "radio",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M198_a3_leicht_radio_s2.wav"
+  },
+  {
+    "mix_id": "M199",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "verkehr",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M199_a3_leicht_verkehr_s1.wav"
+  },
+  {
+    "mix_id": "M200",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "verkehr",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M200_a3_leicht_verkehr_s2.wav"
+  },
+  {
+    "mix_id": "M201",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "akku_konstant",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M201_a3_leicht_akku_konstant_s1.wav"
+  },
+  {
+    "mix_id": "M202",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "akku_konstant",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M202_a3_leicht_akku_konstant_s2.wav"
+  },
+  {
+    "mix_id": "M203",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M203_a3_leicht_akku_dynamisch_s1.wav"
+  },
+  {
+    "mix_id": "M204",
+    "nutzschall": "a3_leicht",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M204_a3_leicht_akku_dynamisch_s2.wav"
+  },
+  {
+    "mix_id": "M205",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "tuerschlaege",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M205_a3_deutlich_tuerschlaege_s1.wav"
+  },
+  {
+    "mix_id": "M206",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "tuerschlaege",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M206_a3_deutlich_tuerschlaege_s2.wav"
+  },
+  {
+    "mix_id": "M207",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "metallhammer",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M207_a3_deutlich_metallhammer_s1.wav"
+  },
+  {
+    "mix_id": "M208",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "metallhammer",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M208_a3_deutlich_metallhammer_s2.wav"
+  },
+  {
+    "mix_id": "M209",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "gespraech",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M209_a3_deutlich_gespraech_s1.wav"
+  },
+  {
+    "mix_id": "M210",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "gespraech",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M210_a3_deutlich_gespraech_s2.wav"
+  },
+  {
+    "mix_id": "M211",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "kraehe",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M211_a3_deutlich_kraehe_s1.wav"
+  },
+  {
+    "mix_id": "M212",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "kraehe",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M212_a3_deutlich_kraehe_s2.wav"
+  },
+  {
+    "mix_id": "M213",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "voegel",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M213_a3_deutlich_voegel_s1.wav"
+  },
+  {
+    "mix_id": "M214",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "voegel",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M214_a3_deutlich_voegel_s2.wav"
+  },
+  {
+    "mix_id": "M215",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "kuh",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M215_a3_deutlich_kuh_s1.wav"
+  },
+  {
+    "mix_id": "M216",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "kuh",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M216_a3_deutlich_kuh_s2.wav"
+  },
+  {
+    "mix_id": "M217",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "alarm",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M217_a3_deutlich_alarm_s1.wav"
+  },
+  {
+    "mix_id": "M218",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "alarm",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M218_a3_deutlich_alarm_s2.wav"
+  },
+  {
+    "mix_id": "M219",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "hupe",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M219_a3_deutlich_hupe_s1.wav"
+  },
+  {
+    "mix_id": "M220",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "hupe",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M220_a3_deutlich_hupe_s2.wav"
+  },
+  {
+    "mix_id": "M221",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "radio",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M221_a3_deutlich_radio_s1.wav"
+  },
+  {
+    "mix_id": "M222",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "radio",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M222_a3_deutlich_radio_s2.wav"
+  },
+  {
+    "mix_id": "M223",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "verkehr",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M223_a3_deutlich_verkehr_s1.wav"
+  },
+  {
+    "mix_id": "M224",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "verkehr",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M224_a3_deutlich_verkehr_s2.wav"
+  },
+  {
+    "mix_id": "M225",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "akku_konstant",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M225_a3_deutlich_akku_konstant_s1.wav"
+  },
+  {
+    "mix_id": "M226",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "akku_konstant",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M226_a3_deutlich_akku_konstant_s2.wav"
+  },
+  {
+    "mix_id": "M227",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 1,
+    "offset_s": 0.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M227_a3_deutlich_akku_dynamisch_s1.wav"
+  },
+  {
+    "mix_id": "M228",
+    "nutzschall": "a3_deutlich",
+    "stoerquelle": "akku_dynamisch",
+    "segment": 2,
+    "offset_s": 5.0,
+    "rolle": "test",
+    "snr_db": 0.0,
+    "file": "M228_a3_deutlich_akku_dynamisch_s2.wav"
+  }
+]
