@@ -6,6 +6,10 @@ Normaldaten trainiert, die zuvor durch dasselbe Verfahren verarbeitet wurden.
 Damit lernt jedes Modell die Artefakte seines Verfahrens als normal und
 bewertet nicht die Trennung, sondern die Maschinenanomalie.
 
+Trainings- und Testnormaldaten stammen aus zeitlich getrennten Abschnitten
+der Normalaufnahme (Feld "rolle" im Manifest). Damit kann kein Testsegment
+aus seinem eigenen Trainingsmaterial bewertet werden.
+
 Zusaetzlich wird das unbearbeitete Mischsignal als Referenz ausgewertet
 ("roh"). Der Vergleich gegen diese Referenz zeigt, ob die Trennung die
 Anomalieerkennung ueberhaupt verbessert.
@@ -63,18 +67,18 @@ def signal_laden(verfahren, eintrag):
     return y
 
 
-def score(modell, skalierer, X):
-    """Anomaliescore: je hoeher, desto anomaler."""
-    return float(np.mean(-modell.score_samples(skalierer.transform(X))))
-
-
 # --- Mischsignale ---
 with open(mix_dir / "manifest.json", encoding="utf-8") as f:
     manifest = json.load(f)
 
-ist_normal = [e["nutzschall"] == "normal" for e in manifest]
-labels = [0 if n else 1 for n in ist_normal]
-normal_idx = [i for i, n in enumerate(ist_normal) if n]
+train_idx = [i for i, e in enumerate(manifest) if e["rolle"] == "train"]
+test_idx = [i for i, e in enumerate(manifest) if e["rolle"] == "test"]
+labels = [0 if e["nutzschall"] == "normal" else 1 for e in manifest]
+
+assert all(labels[i] == 0 for i in train_idx), "Trainingsmenge enthaelt Anomalien"
+print(f"{len(train_idx)} Trainingssegmente, {len(test_idx)} Testsegmente "
+      f"(davon {sum(1 for i in test_idx if labels[i] == 0)} normal, "
+      f"{sum(labels[i] for i in test_idx)} anomal)\n")
 
 merkmal_dir.mkdir(parents=True, exist_ok=True)
 protokoll_dir.mkdir(parents=True, exist_ok=True)
@@ -83,44 +87,36 @@ zeilen = []
 zusammenfassung = []
 
 for verfahren in ["roh"] + list(vl.VERFAHREN):
-    # --- Merkmale aller 84 Segmente ---
+    # --- Merkmale aller Segmente ---
     X = [merkmale(signal_laden(verfahren, e)) for e in manifest]
     np.savez_compressed(merkmal_dir / f"{verfahren}.npz",
                         **{e["mix_id"]: x for e, x in zip(manifest, X)})
 
-    scores = np.zeros(len(manifest))
-
-    # --- Modell auf allen Normaldaten: bewertet die Anomaliesegmente ---
-    X_train = np.vstack([X[i] for i in normal_idx])
+    # --- Training auf den Normaldaten des Trainingsbereichs ---
+    X_train = np.vstack([X[i] for i in train_idx])
     skalierer = StandardScaler().fit(X_train)
     modell = IsolationForest(random_state=SEED, n_estimators=100)
     modell.fit(skalierer.transform(X_train))
 
-    for i, x in enumerate(X):
-        if not ist_normal[i]:
-            scores[i] = score(modell, skalierer, x)
+    # --- Bewertung der Testsegmente ---
+    scores = {i: float(np.mean(-modell.score_samples(skalierer.transform(X[i]))))
+              for i in test_idx}
 
-    # --- Normaldaten: Leave-one-out, damit ihr Score nicht im Training steckt ---
-    for i in normal_idx:
-        rest = [j for j in normal_idx if j != i]
-        X_r = np.vstack([X[j] for j in rest])
-        sk_r = StandardScaler().fit(X_r)
-        mo_r = IsolationForest(random_state=SEED, n_estimators=100)
-        mo_r.fit(sk_r.transform(X_r))
-        scores[i] = score(mo_r, sk_r, X[i])
-
-    auc = roc_auc_score(labels, scores)
+    auc = roc_auc_score([labels[i] for i in test_idx],
+                        [scores[i] for i in test_idx])
     zusammenfassung.append({"verfahren": verfahren, "auc": round(auc, 4)})
     print(f"{verfahren:24s} AUC = {auc:.4f}")
 
-    for e, s, lab in zip(manifest, scores, labels):
+    for i in test_idx:
+        e = manifest[i]
         zeilen.append({
             "mix_id": e["mix_id"],
             "nutzschall": e["nutzschall"],
             "stoerquelle": e["stoerquelle"],
+            "offset_s": e["offset_s"],
             "verfahren": verfahren,
-            "label": lab,
-            "score": round(float(s), 6),
+            "label": labels[i],
+            "score": round(scores[i], 6),
         })
 
 # --- Protokolle schreiben ---
