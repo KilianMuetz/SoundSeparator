@@ -12,7 +12,7 @@ import soundfile as sf
 from pathlib import Path
 import json
 
-TARGET_DURATION = 10.0   # Sekunden, durch kuerzeste Anomalie-Aufnahme (11.9s) begrenzt
+TARGET_DURATION = 5.0   # Sekunden, durch kuerzeste Anomalie-Aufnahme (11.9s) begrenzt
 TARGET_PEAK = 0.9  # normalisierter Ziel-Peak (relative Amplitude, <1.0 als Clipping-Puffer)
 ONSET_S = 2.0             # Startzeit transienter Events innerhalb des Mix
 SNR_DB = 0.0              # Ziel-SNR Nutzschall vs. Stoerquelle (RMS-basiert)
