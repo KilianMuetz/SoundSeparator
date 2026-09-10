@@ -106,7 +106,9 @@ def build_mix(nutz_path, stoer_path, stoer_type, offset=0.0, sr=44100):
     return mix_at_snr(nutz, stoer, SNR_DB)
 
 
-OFFSETS = [0.0, 5.0]   # zwei Segmente je Kombination aus derselben Aufnahme
+ANOMALIE_OFFSETS = [0.0, 5.0]
+NORMAL_TRAIN_OFFSETS = [0.0, 300.0, 600.0, 900.0]     # erste Haelfte der Normalaufnahme
+NORMAL_TEST_OFFSETS = [1400.0, 1700.0, 2000.0]        # zweite Haelfte, zeitlich klar getrennt
 
 
 def main(data_dir, out_dir):
