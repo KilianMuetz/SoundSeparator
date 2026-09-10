@@ -2,9 +2,15 @@
 mix_signals.py — Erzeugt Mischsignale aus Nutzschall- und Stoerquellen-Aufnahmen.
 
 Zwei Quelltypen:
-  - "continuous": Hintergrundgeraeusch, wird auf TARGET_DURATION getrimmt.
-  - "transient":  Kurzes Einzelereignis (~5s), wird bei ONSET_S in die
-                  TARGET_DURATION eingesetzt (Rest bleibt Nutzschall pur).
+  - "continuous": Hintergrundgeraeusch, laeuft ab ONSET_S bis zum Segmentende.
+  - "transient":  Kurzes Einzelereignis, wird bei ONSET_S eingesetzt
+                  (Rest bleibt Nutzschall pur).
+
+Je Kombination werden mehrere Segmente aus unterschiedlichen Abschnitten
+derselben Aufnahme gebildet. Die Normalsegmente teilen sich in einen
+Trainings- und einen zeitlich davon getrennten Testbereich der Aufnahme
+(Feld "rolle"), damit die Anomalieerkennung nicht auf demselben
+Aufnahmeabschnitt trainiert und bewertet wird.
 """
 
 import numpy as np
@@ -12,26 +18,17 @@ import soundfile as sf
 from pathlib import Path
 import json
 
-TARGET_DURATION = 5.0   # Sekunden, durch kuerzeste Anomalie-Aufnahme (11.9s) begrenzt
-TARGET_PEAK = 0.9  # normalisierter Ziel-Peak (relative Amplitude, <1.0 als Clipping-Puffer)
-ONSET_S = 2.0             # Startzeit transienter Events innerhalb des Mix
+TARGET_DURATION = 5.0     # Segmentlaenge des SIPREMA-Systems
+TARGET_PEAK = 0.9         # normalisierter Ziel-Peak (Clipping-Puffer)
+ONSET_S = 2.0             # Einsatz des Stoerschalls innerhalb des Segments
 SNR_DB = 0.0              # Ziel-SNR Nutzschall vs. Stoerquelle (RMS-basiert)
 
-def load_mono(path, sr_target=44100):
-    audio, sr = sf.read(path, always_2d=False)
-    if audio.ndim > 1:
-        audio = audio.mean(axis=1)
-    assert sr == sr_target, f"{path}: Samplerate {sr} != {sr_target}"
-    audio = audio.astype(np.float64)
-
-    peak = np.max(np.abs(audio))
-    if peak > 0:
-        audio = audio / peak * TARGET_PEAK
-
-    return audio
+ANOMALIE_OFFSETS = [0.0, 5.0]          # zwei Segmente je Anomalieaufnahme
+NORMAL_TRAIN_ANTEILE = [0.02, 0.14, 0.26, 0.38]   # erstes Drittel der Normalaufnahme
+NORMAL_TEST_ANTEILE = [0.66, 0.80, 0.94]          # letztes Drittel, klar getrennt
 
 NUTZSCHALL = {
-    "normal":       ("normalzustand.wav", None),        # Offset wird zufaellig/fix gewaehlt
+    "normal":       ("normalzustand.wav", None),
     "a1_leicht":    ("gewicht_leicht.wav", 0.0),
     "a1_stark":     ("gewicht_schwer.wav", 0.0),
     "a2_leicht":    ("locker_leicht.wav", 0.0),
@@ -82,8 +79,8 @@ def mix_at_snr(nutzschall, stoer, snr_db):
     stoer_scaled = stoer * (target_stoer_rms / rms(stoer))
     mix = nutzschall + stoer_scaled
     peak = np.max(np.abs(mix))
-    if peak > 0.99:
-        mix = mix / peak * 0.99
+    if peak > TARGET_PEAK:
+        mix = mix / peak * TARGET_PEAK
     return mix
 
 
@@ -97,7 +94,7 @@ def build_mix(nutz_path, stoer_path, stoer_type, offset=0.0, sr=44100):
     rest_n = len(stoer) - onset_n
 
     if stoer_type == "continuous":
-        # Offset zyklisch in die verfuegbare Laenge falten
+        # Offset zyklisch in die verfuegbare Laenge der Stoeraufnahme falten
         nutzbar = len(stoer_full) / sr - rest_n / sr
         stoer_offset = offset % nutzbar if nutzbar > 0 else 0.0
         stoer[onset_n:] = trim_window(stoer_full, sr, rest_n / sr, offset=stoer_offset)
@@ -108,21 +105,23 @@ def build_mix(nutz_path, stoer_path, stoer_type, offset=0.0, sr=44100):
     return mix_at_snr(nutz, stoer, SNR_DB)
 
 
-ANOMALIE_OFFSETS = [0.0, 5.0]
-NORMAL_TRAIN_OFFSETS = [0.0, 300.0, 600.0, 900.0]     # erste Haelfte der Normalaufnahme
-NORMAL_TEST_OFFSETS = [1400.0, 1700.0, 2000.0]        # zweite Haelfte, zeitlich klar getrennt
-
-
 def main(data_dir, out_dir):
     data_dir, out_dir = Path(data_dir), Path(out_dir)
     out_dir.mkdir(exist_ok=True, parents=True)
     manifest = []
     mix_id = 1
 
+    # Offsets relativ zur tatsaechlichen Laenge der Normalaufnahme
+    spanne = sf.info(data_dir / NUTZSCHALL["normal"][0]).duration - TARGET_DURATION
+    normal_train = [spanne * f for f in NORMAL_TRAIN_ANTEILE]
+    normal_test = [spanne * f for f in NORMAL_TEST_ANTEILE]
+    print(f"Normalaufnahme: {spanne + TARGET_DURATION:.0f}s, "
+          f"Training bis {normal_train[-1]:.0f}s, Test ab {normal_test[0]:.0f}s")
+
     for nutz_name, (nutz_file, _) in NUTZSCHALL.items():
         if nutz_name == "normal":
-            plan = ([(o, "train") for o in NORMAL_TRAIN_OFFSETS]
-                    + [(o, "test") for o in NORMAL_TEST_OFFSETS])
+            plan = ([(o, "train") for o in normal_train]
+                    + [(o, "test") for o in normal_test])
         else:
             plan = [(o, "test") for o in ANOMALIE_OFFSETS]
 
@@ -137,14 +136,14 @@ def main(data_dir, out_dir):
                     "nutzschall": nutz_name,
                     "stoerquelle": stoer_name,
                     "segment": seg,
-                    "offset_s": offset,
+                    "offset_s": round(offset, 2),
                     "rolle": rolle,
                     "snr_db": SNR_DB,
                     "file": mix_name,
                 })
                 mix_id += 1
 
-    with open(out_dir / "manifest.json", "w") as f:
+    with open(out_dir / "manifest.json", "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2, ensure_ascii=False)
     print(f"{mix_id - 1} Mischsignale erzeugt.")
 
