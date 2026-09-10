@@ -97,8 +97,10 @@ def build_mix(nutz_path, stoer_path, stoer_type, offset=0.0, sr=44100):
     rest_n = len(stoer) - onset_n
 
     if stoer_type == "continuous":
-        # Hintergrund ebenfalls versetzt, damit sich die Segmente unterscheiden
-        stoer[onset_n:] = trim_window(stoer_full, sr, rest_n / sr, offset=offset)
+        # Offset zyklisch in die verfuegbare Laenge falten
+        nutzbar = len(stoer_full) / sr - rest_n / sr
+        stoer_offset = offset % nutzbar if nutzbar > 0 else 0.0
+        stoer[onset_n:] = trim_window(stoer_full, sr, rest_n / sr, offset=stoer_offset)
     else:  # transient: kurzes Einzelereignis, Rest bleibt Nutzschall pur
         event_n = min(len(stoer_full), rest_n)
         stoer[onset_n:onset_n + event_n] = stoer_full[:event_n]
@@ -118,8 +120,14 @@ def main(data_dir, out_dir):
     mix_id = 1
 
     for nutz_name, (nutz_file, _) in NUTZSCHALL.items():
+        if nutz_name == "normal":
+            plan = ([(o, "train") for o in NORMAL_TRAIN_OFFSETS]
+                    + [(o, "test") for o in NORMAL_TEST_OFFSETS])
+        else:
+            plan = [(o, "test") for o in ANOMALIE_OFFSETS]
+
         for stoer_name, (stoer_file, stoer_type) in STOERQUELLEN.items():
-            for seg, offset in enumerate(OFFSETS, 1):
+            for seg, (offset, rolle) in enumerate(plan, 1):
                 mix_name = f"M{mix_id:03d}_{nutz_name}_{stoer_name}_s{seg}.wav"
                 mix = build_mix(data_dir / nutz_file, data_dir / stoer_file,
                                 stoer_type, offset=offset)
@@ -129,6 +137,8 @@ def main(data_dir, out_dir):
                     "nutzschall": nutz_name,
                     "stoerquelle": stoer_name,
                     "segment": seg,
+                    "offset_s": offset,
+                    "rolle": rolle,
                     "snr_db": SNR_DB,
                     "file": mix_name,
                 })
