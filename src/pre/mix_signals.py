@@ -87,9 +87,9 @@ def mix_at_snr(nutzschall, stoer, snr_db):
     return mix
 
 
-def build_mix(nutz_path, stoer_path, stoer_type, sr=44100):
+def build_mix(nutz_path, stoer_path, stoer_type, offset=0.0, sr=44100):
     nutz = load_mono(nutz_path, sr)
-    nutz = trim_window(nutz, sr, TARGET_DURATION, offset=0.0)
+    nutz = trim_window(nutz, sr, TARGET_DURATION, offset=offset)
 
     stoer_full = load_mono(stoer_path, sr)
     stoer = np.zeros(int(TARGET_DURATION * sr))
@@ -97,12 +97,16 @@ def build_mix(nutz_path, stoer_path, stoer_type, sr=44100):
     rest_n = len(stoer) - onset_n
 
     if stoer_type == "continuous":
-        stoer[onset_n:] = trim_window(stoer_full, sr, rest_n / sr, offset=0.0)
-    else:  # transient: Einzelereignis, Rest bleibt Nutzschall pur
+        # Hintergrund ebenfalls versetzt, damit sich die Segmente unterscheiden
+        stoer[onset_n:] = trim_window(stoer_full, sr, rest_n / sr, offset=offset)
+    else:  # transient: kurzes Einzelereignis, Rest bleibt Nutzschall pur
         event_n = min(len(stoer_full), rest_n)
         stoer[onset_n:onset_n + event_n] = stoer_full[:event_n]
 
     return mix_at_snr(nutz, stoer, SNR_DB)
+
+
+OFFSETS = [0.0, 5.0]   # zwei Segmente je Kombination aus derselben Aufnahme
 
 
 def main(data_dir, out_dir):
@@ -113,17 +117,20 @@ def main(data_dir, out_dir):
 
     for nutz_name, (nutz_file, _) in NUTZSCHALL.items():
         for stoer_name, (stoer_file, stoer_type) in STOERQUELLEN.items():
-            mix_name = f"M{mix_id:03d}_{nutz_name}_{stoer_name}.wav"
-            mix = build_mix(data_dir / nutz_file, data_dir / stoer_file, stoer_type)
-            sf.write(out_dir / mix_name, mix, 44100, subtype="PCM_24")
-            manifest.append({
-                "mix_id": f"M{mix_id:03d}",
-                "nutzschall": nutz_name,
-                "stoerquelle": stoer_name,
-                "snr_db": SNR_DB,
-                "file": mix_name,
-            })
-            mix_id += 1
+            for seg, offset in enumerate(OFFSETS, 1):
+                mix_name = f"M{mix_id:03d}_{nutz_name}_{stoer_name}_s{seg}.wav"
+                mix = build_mix(data_dir / nutz_file, data_dir / stoer_file,
+                                stoer_type, offset=offset)
+                sf.write(out_dir / mix_name, mix, 44100, subtype="PCM_24")
+                manifest.append({
+                    "mix_id": f"M{mix_id:03d}",
+                    "nutzschall": nutz_name,
+                    "stoerquelle": stoer_name,
+                    "segment": seg,
+                    "snr_db": SNR_DB,
+                    "file": mix_name,
+                })
+                mix_id += 1
 
     with open(out_dir / "manifest.json", "w") as f:
         json.dump(manifest, f, indent=2, ensure_ascii=False)
