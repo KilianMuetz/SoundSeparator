@@ -27,13 +27,12 @@ from pathlib import Path
 
 import librosa
 import numpy as np
-import soundfile as sf
-from scipy.signal import resample_poly
 from sklearn.ensemble import IsolationForest
 from sklearn.metrics import roc_auc_score
 from sklearn.preprocessing import StandardScaler
 
 import verfahren_lib as vl
+from io_utils import signal_laden as _signal_laden
 
 # --- Pfade ---
 BASE = Path(__file__).parent.parent
@@ -44,6 +43,7 @@ protokoll_dir = BASE / "ergebnisse" / "protokoll"
 
 # --- Parameter ---
 SR = 16000
+SR_QUELLE = 44100
 N_MFCC = 20        # in Abstimmung mit Roewaplan
 N_FFT = 512
 WIN_LENGTH = 400   # 25 ms
@@ -52,20 +52,23 @@ SEEDS = [0, 1, 2, 3, 4]   # Mittelung ueber mehrere Isolation-Forest-Initialisie
 
 
 def merkmale(y):
-    """20 MFCCs je Frame, Ergebnis (n_frames, N_MFCC)."""
+    """20 MFCCs je Frame, Ergebnis (n_frames, N_MFCC).
+
+    Pegelnormiert wie in fidelity.py: ohne Normierung traegt der 0. MFCC
+    (c0) die Gesamtlautstaerke des Segments. Verfahren mit geringem
+    Signalerhalt (z. B. synchrone Mittelung, Tabelle 6.4) liefern leisere
+    Nutzsignale, die im Merkmalsraum sonst allein wegen des Pegels als
+    Anomalie auffallen koennten -- unabhaengig von der tatsaechlichen
+    spektralen Trennqualitaet. Die Normierung entkoppelt beides.
+    """
+    y = y / (np.sqrt(np.mean(y ** 2)) + 1e-12)
     m = librosa.feature.mfcc(y=y, sr=SR, n_mfcc=N_MFCC, n_fft=N_FFT,
                              win_length=WIN_LENGTH, hop_length=HOP_LENGTH)
     return m.T.astype(np.float64)
 
 
 def signal_laden(verfahren, eintrag):
-    """Getrenntes Nutzsignal, fuer 'roh' das dezimierte Mischsignal."""
-    if verfahren == "roh":
-        y, sr = sf.read(mix_dir / eintrag["file"], dtype="float64")
-        return resample_poly(y, SR // 100, sr // 100)
-    y, _ = sf.read(getrennt_dir / verfahren / f"{eintrag['mix_id']}_Ns.wav",
-                   dtype="float64")
-    return y
+    return _signal_laden(verfahren, eintrag, mix_dir, getrennt_dir, SR, SR_QUELLE)
 
 
 # --- Mischsignale ---

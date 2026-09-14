@@ -30,12 +30,12 @@ from pathlib import Path
 
 import librosa
 import numpy as np
-import soundfile as sf
 from scipy.signal import resample_poly
 from sklearn.ensemble import IsolationForest
 from sklearn.preprocessing import StandardScaler
 
 import verfahren_lib as vl
+from io_utils import signal_laden as _signal_laden
 
 sys.path.insert(0, str(Path(__file__).parent / "pre"))
 import mix_signals as ms
@@ -67,33 +67,20 @@ def roh_laden(name):
 
 
 def ground_truth(eintrag):
-    """Reines Nutzsignal des Mischsignals, inklusive der Mischskalierung."""
+    """Reines Nutzsignal des Mischsignals, inklusive der Mischskalierung.
+
+    Nutzt mix_signals.rekonstruiere_bestandteile() -- dieselbe Rechnung,
+    mit der auch build_mix() das Mischsignal erzeugt hat, statt einer
+    eigenen Kopie der Onset-/Skalierungslogik.
+    """
     nutz_file = ms.NUTZSCHALL[eintrag["nutzschall"]][0]
     stoer_file, stoer_type = ms.STOERQUELLEN[eintrag["stoerquelle"]]
-    offset = eintrag["offset_s"]
-    sr = SR_QUELLE
 
-    nutz = ms.trim_window(roh_laden(nutz_file), sr, ms.TARGET_DURATION, offset=offset)
+    nutz, _, _ = ms.rekonstruiere_bestandteile(
+        roh_laden(nutz_file), roh_laden(stoer_file), stoer_type,
+        eintrag["offset_s"], sr=SR_QUELLE)
 
-    stoer_full = roh_laden(stoer_file)
-    stoer = np.zeros(int(ms.TARGET_DURATION * sr))
-    onset_n = int(ms.ONSET_S * sr)
-    rest_n = len(stoer) - onset_n
-    if stoer_type == "continuous":
-        nutzbar = len(stoer_full) / sr - rest_n / sr
-        stoer_offset = offset % nutzbar if nutzbar > 0 else 0.0
-        stoer[onset_n:] = ms.trim_window(stoer_full, sr, rest_n / sr, offset=stoer_offset)
-    else:
-        event_n = min(len(stoer_full), rest_n)
-        stoer[onset_n:onset_n + event_n] = stoer_full[:event_n]
-
-    # Skalierung exakt wie in mix_at_snr
-    ziel_rms = ms.rms(nutz) / (10 ** (ms.SNR_DB / 20))
-    mix = nutz + stoer * (ziel_rms / ms.rms(stoer))
-    peak = np.max(np.abs(mix))
-    faktor = ms.TARGET_PEAK / peak if peak > ms.TARGET_PEAK else 1.0
-
-    return resample_poly(nutz * faktor, SR // 100, sr // 100)
+    return resample_poly(nutz, SR // 100, SR_QUELLE // 100)
 
 
 def merkmale(y):
@@ -105,12 +92,7 @@ def merkmale(y):
 
 
 def signal_laden(verfahren, eintrag):
-    if verfahren == "roh":
-        y, sr = sf.read(mix_dir / eintrag["file"], dtype="float64")
-        return resample_poly(y, SR // 100, sr // 100)
-    y, _ = sf.read(getrennt_dir / verfahren / f"{eintrag['mix_id']}_Ns.wav",
-                   dtype="float64")
-    return y
+    return _signal_laden(verfahren, eintrag, mix_dir, getrennt_dir, SR, SR_QUELLE)
 
 
 # --- Mischsignale ---

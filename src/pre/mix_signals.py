@@ -74,21 +74,12 @@ def rms(x):
     return np.sqrt(np.mean(x ** 2) + 1e-12)
 
 
-def mix_at_snr(nutzschall, stoer, snr_db):
-    target_stoer_rms = rms(nutzschall) / (10 ** (snr_db / 20))
-    stoer_scaled = stoer * (target_stoer_rms / rms(stoer))
-    mix = nutzschall + stoer_scaled
-    peak = np.max(np.abs(mix))
-    if peak > TARGET_PEAK:
-        mix = mix / peak * TARGET_PEAK
-    return mix
+def rekonstruiere_stoer(stoer_full, stoer_type, sr, offset=0.0):
+    """Stoerschall-Anteil eines Segments aus der vollen Stoeraufnahme.
 
-
-def build_mix(nutz_path, stoer_path, stoer_type, offset=0.0, sr=44100):
-    nutz = load_mono(nutz_path, sr)
-    nutz = trim_window(nutz, sr, TARGET_DURATION, offset=offset)
-
-    stoer_full = load_mono(stoer_path, sr)
+    Einzige Stelle, die die Onset-/Fenster-Logik implementiert -- vorher
+    war das in build_mix(), fidelity.py und sisdr.py dreifach dupliziert.
+    """
     stoer = np.zeros(int(TARGET_DURATION * sr))
     onset_n = int(ONSET_S * sr)
     rest_n = len(stoer) - onset_n
@@ -102,7 +93,46 @@ def build_mix(nutz_path, stoer_path, stoer_type, offset=0.0, sr=44100):
         event_n = min(len(stoer_full), rest_n)
         stoer[onset_n:onset_n + event_n] = stoer_full[:event_n]
 
-    return mix_at_snr(nutz, stoer, SNR_DB)
+    return stoer
+
+
+def skaliere_und_begrenze(nutz, stoer, snr_db):
+    """Skaliert stoer auf den Ziel-SNR und begrenzt den Spitzenwert des Mischsignals.
+
+    Gibt (nutz, stoer, faktor) einzeln zurueck statt der Summe: fidelity.py
+    und sisdr.py brauchen Nutz- und Stoeranteil getrennt, apply_methods.py
+    (ueber build_mix) nur die Summe. Beide beziehen die Werte jetzt aus
+    derselben Rechnung, koennen also nicht mehr auseinanderlaufen.
+    """
+    ziel_rms = rms(nutz) / (10 ** (snr_db / 20))
+    stoer_skaliert = stoer * (ziel_rms / rms(stoer))
+    peak = np.max(np.abs(nutz + stoer_skaliert))
+    faktor = TARGET_PEAK / peak if peak > TARGET_PEAK else 1.0
+    return nutz * faktor, stoer_skaliert * faktor, faktor
+
+
+def mix_at_snr(nutzschall, stoer, snr_db):
+    nutz, stoer, _ = skaliere_und_begrenze(nutzschall, stoer, snr_db)
+    return nutz + stoer
+
+
+def rekonstruiere_bestandteile(nutz_full, stoer_full, stoer_type, offset, sr=44100):
+    """Reines Nutz- und Stoersignal eines Mischsignals (Ground Truth).
+
+    Rekonstruiert exakt das, was build_mix() beim Erzeugen des Mischsignals
+    verwendet hat -- als gemeinsame Grundlage fuer fidelity.py und sisdr.py.
+    """
+    nutz = trim_window(nutz_full, sr, TARGET_DURATION, offset=offset)
+    stoer = rekonstruiere_stoer(stoer_full, stoer_type, sr, offset=offset)
+    return skaliere_und_begrenze(nutz, stoer, SNR_DB)
+
+
+def build_mix(nutz_path, stoer_path, stoer_type, offset=0.0, sr=44100):
+    nutz_full = load_mono(nutz_path, sr)
+    stoer_full = load_mono(stoer_path, sr)
+    nutz, stoer, _ = rekonstruiere_bestandteile(nutz_full, stoer_full, stoer_type,
+                                                offset, sr)
+    return nutz + stoer
 
 
 def main(data_dir, out_dir):
