@@ -1,58 +1,47 @@
+"""Matching Pursuit nach Mallat und Zhang (1993). Prototyp fuer die Trennschaerfe."""
+
 from pathlib import Path
 
 import numpy as np
 import soundfile as sf
 
 # --- Parameter ---
-BASE = Path(__file__).parent
-eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/matching_pursuit/matching_pursuitNs.wav"
-ausgabe_hs = BASE / "../sep/matching_pursuit/matching_pursuitHs.wav"
+BASE = Path(__file__).parents[2]
+name = "matching_pursuit"
+eingabe = BASE / "data" / "observ_1.wav"
+ausgabe = BASE / "explorativ" / name
 
-f_grenze = 800.0    # Obergrenze des Maschinenbands in Hz (Atom-Zuordnung)
-n_atoms = 100       # Anzahl greedy gewaehlter Atome pro Block
-seg_len = 4096      # Blocklaenge
-hop = 2048          # Blockversatz (seg_len/2 = 50 % Overlap)
+bausteine = 100    # so viele Bausteine je Block
+f_grenze = 800.0   # Bausteine mit tieferer Frequenz zaehlen als Nutzschall
+block = 4096       # Blocklaenge in Abtastwerten
+versatz = 2048     # halbe Blocklaenge, 50 % Ueberlappung
 
 # --- Laden ---
 y, sr = sf.read(eingabe, dtype="float64")
-N = len(y)
+fenster = np.hanning(block)
+freqs = np.fft.rfftfreq(block, 1 / sr)
 
-# --- Matching Pursuit je Block + Overlap-Add ---
-fenster = np.hanning(seg_len)
-ns = np.zeros(N)
-norm = np.zeros(N)                       # Fenster-Ueberlappungssumme zur Normierung
-
-for start in range(0, N - seg_len + 1, hop):
-    seg = y[start:start + seg_len]       # MP auf dem rohen Block
-    L = len(seg)
-    freqs = np.fft.rfftfreq(L, 1 / sr)
-    r = seg.copy()
-    ns_block = np.zeros(L)
-    for _ in range(n_atoms):
-        R = np.fft.rfft(r)
-        idx = np.argmax(np.abs(R))       # staerkstes Atom = groesster Frequenzbin
-        atom_spec = np.zeros_like(R)
-        atom_spec[idx] = R[idx]
-        atom = np.fft.irfft(atom_spec, n=L)
-        if freqs[idx] <= f_grenze:        # Zuordnung nach Atom-Frequenz
-            ns_block += atom
-        r -= atom
-    # gefenstertes Overlap-Add
-    ns[start:start + seg_len] += ns_block * fenster
-    norm[start:start + seg_len] += fenster
-
-norm[norm < 1e-8] = 1.0
-ns = ns / norm
-
-# --- Residuum = Stoerschall ---
+# --- Blockweise zerlegen und ueberlappend zusammensetzen ---
+ns, gewicht = np.zeros_like(y), np.zeros_like(y)
+for start in range(0, len(y) - block + 1, versatz):
+    rest = y[start:start + block].copy()
+    ns_block = np.zeros(block)
+    for _ in range(bausteine):
+        R = np.fft.rfft(rest)
+        idx = np.argmax(np.abs(R))                 # staerkster Baustein
+        spek = np.zeros_like(R)
+        spek[idx] = R[idx]
+        baustein = np.fft.irfft(spek, n=block)
+        if freqs[idx] <= f_grenze:
+            ns_block += baustein
+        rest -= baustein
+    ns[start:start + block] += ns_block * fenster
+    gewicht[start:start + block] += fenster
+ns = ns / np.where(gewicht < 1e-8, 1.0, gewicht)
 hs = y - ns
 
 # --- Speichern ---
-ausgabe_ns.parent.mkdir(parents=True, exist_ok=True)
-sf.write(ausgabe_ns, ns, sr)
-sf.write(ausgabe_hs, hs, sr)
-print(f"n_atoms = {n_atoms}/Block, Overlap-Add (hop={hop}), f_grenze = {f_grenze} Hz")
-print(f"Nutz-Energie / Gesamt: {np.sum(ns**2)/np.sum(y**2):.3f}")
-print(f"Fertig: {ausgabe_ns}")
-print(f"Fertig: {ausgabe_hs}")
+ausgabe.mkdir(parents=True, exist_ok=True)
+sf.write(ausgabe / f"{name}Ns.wav", ns, sr)
+sf.write(ausgabe / f"{name}Hs.wav", hs, sr)
+print(f"{name}: fertig")

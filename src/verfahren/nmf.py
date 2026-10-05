@@ -1,3 +1,5 @@
+"""NMF nach Virtanen (2007). Prototyp fuer die Trennschaerfe."""
+
 from pathlib import Path
 
 import numpy as np
@@ -5,55 +7,47 @@ import soundfile as sf
 from scipy.signal import stft, istft
 
 # --- Parameter ---
-BASE = Path(__file__).parent
-eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/nmf/nmf.wav"
-ausgabe_hs = BASE / "../sep/nmf/nmf.wav"
+BASE = Path(__file__).parents[2]
+name = "nmf"
+eingabe = BASE / "data" / "observ_1.wav"
+ausgabe = BASE / "explorativ" / name
 
-f_grenze = 800.0  # Obergrenze des Maschinenbands in Hz (Zuordnungskriterium)
-K = 8             # Anzahl der Komponenten
-n_iter = 300      # Iterationen der multiplikativen Updates
-seed = 0          # Zufalls-Init (Reproduzierbarkeit)
-nperseg = 1024
-noverlap = 512
+K = 8              # Anzahl der Grundmuster
+schritte = 300     # Anzahl der Anpassungsschritte
+f_grenze = 800.0   # Grundmuster mit tieferem Schwerpunkt zaehlen als Nutzschall
+seed = 0
+nperseg, noverlap = 1024, 512
 
-# --- Laden & STFT ---
+# --- Laden und STFT ---
 y, sr = sf.read(eingabe, dtype="float64")
 f, t, Y = stft(y, fs=sr, nperseg=nperseg, noverlap=noverlap)
-V, Yph = np.abs(Y), np.angle(Y)
+V, Y_phase = np.abs(Y), np.angle(Y)
 
-# --- NMF mit KL-Divergenz (multiplikative Updates) ---
+# --- Zerlegung V = W @ H mit multiplikativen Updates ---
 rng = np.random.default_rng(seed)
-m, n = V.shape
-W = rng.random((m, K)) + 1e-6
-H = rng.random((K, n)) + 1e-6
-eps = 1e-10
-ones = np.ones((m, n))
+W = rng.random((V.shape[0], K)) + 1e-6
+H = rng.random((K, V.shape[1])) + 1e-6
+eins = np.ones_like(V)
+for _ in range(schritte):
+    H *= (W.T @ (V / (W @ H + 1e-10))) / (W.T @ eins + 1e-10)
+    W *= ((V / (W @ H + 1e-10)) @ H.T) / (eins @ H.T + 1e-10)
 
-for it in range(n_iter):
-    WH = W @ H + eps
-    H *= (W.T @ (V / WH)) / (W.T @ ones + eps)
-    WH = W @ H + eps
-    W *= ((V / WH) @ H.T) / (ones @ H.T + eps)
+# --- Zuordnung ueber den Frequenzschwerpunkt je Grundmuster ---
+schwerpunkt = (f[:, None] * W).sum(axis=0) / (W.sum(axis=0) + 1e-10)
+ist_nutz = schwerpunkt <= f_grenze
 
-# --- Zuordnung ueber den spektralen Schwerpunkt je Komponente ---
-centroid = (f[:, None] * W).sum(axis=0) / (W.sum(axis=0) + eps)
-ist_nutz = centroid <= f_grenze
+# --- Anteile aufteilen ---
+WH = W @ H + 1e-10
+Ns_mag = (W[:, ist_nutz] @ H[ist_nutz]) / WH * V
+Hs_mag = (W[:, ~ist_nutz] @ H[~ist_nutz]) / WH * V
 
-# --- Wiener-artige Rekonstruktion je Kanal ---
-WH_ges = W @ H + eps
-V_ns = (W[:, ist_nutz] @ H[ist_nutz]) / WH_ges * V
-V_hs = (W[:, ~ist_nutz] @ H[~ist_nutz]) / WH_ges * V
-
-_, ns = istft(V_ns * np.exp(1j * Yph), fs=sr, nperseg=nperseg, noverlap=noverlap)
-_, hs = istft(V_hs * np.exp(1j * Yph), fs=sr, nperseg=nperseg, noverlap=noverlap)
+# --- Zurueck in den Zeitbereich mit Originalphase ---
+_, ns = istft(Ns_mag * np.exp(1j * Y_phase), fs=sr, nperseg=nperseg, noverlap=noverlap)
+_, hs = istft(Hs_mag * np.exp(1j * Y_phase), fs=sr, nperseg=nperseg, noverlap=noverlap)
 ns, hs = ns[:len(y)], hs[:len(y)]
 
 # --- Speichern ---
-ausgabe_ns.parent.mkdir(parents=True, exist_ok=True)
-sf.write(ausgabe_ns, ns, sr)
-sf.write(ausgabe_hs, hs, sr)
-print(f"Centroids (Hz): {np.round(np.sort(centroid), 0)}")
-print(f"Nutzschall-Komponenten: {np.where(ist_nutz)[0].tolist()}")
-print(f"Fertig: {ausgabe_ns}")
-print(f"Fertig: {ausgabe_hs}")
+ausgabe.mkdir(parents=True, exist_ok=True)
+sf.write(ausgabe / f"{name}Ns.wav", ns, sr)
+sf.write(ausgabe / f"{name}Hs.wav", hs, sr)
+print(f"{name}: {ist_nutz.sum()} von {K} Grundmustern als Nutzschall")

@@ -1,54 +1,39 @@
+"""Synchrone Mittelung nach Bechhoefer und Kingsley (2009). Prototyp fuer die Trennschaerfe."""
+
 from pathlib import Path
 
 import numpy as np
 import soundfile as sf
 
 # --- Parameter ---
-BASE = Path(__file__).parent
-eingabe = BASE / "../data/observ_1.wav"
-ausgabe_ns = BASE / "../sep/synchronous_averaging/synchronous_averagingNs.wav"   # synchron
-ausgabe_hs = BASE / "../sep/synchronous_averaging/synchronous_averagingHs.wav"   # asynchron
+BASE = Path(__file__).parents[2]
+name = "synchronous_averaging"
+eingabe = BASE / "data" / "observ_1.wav"
+ausgabe = BASE / "explorativ" / name
 
-rpm_min, rpm_max = 500, 5000   # plausibler Suchbereich fuer die Drehzahl
+rpm_min, rpm_max = 500, 5000   # plausibler Suchbereich der Drehzahl
 
 # --- Laden ---
 y, sr = sf.read(eingabe, dtype="float64")
 
-# --- Drehzahl per Autokorrelation schaetzen ---
-lag_min = int(sr / (rpm_max / 60.0))           # kleinste plausible Periode
-lag_max = int(sr / (rpm_min / 60.0))           # groesste plausible Periode
-
-akf = np.correlate(y, y, mode="full")[len(y) - 1:]   # nur positive Lags
-
-# Peak im Suchbereich; parabolische Interpolation fuer Sub-Sample-Genauigkeit
+# --- Periodenlaenge per Autokorrelation schaetzen ---
+lag_min = int(sr / (rpm_max / 60))
+lag_max = int(sr / (rpm_min / 60))
+akf = np.correlate(y, y, mode="full")[len(y) - 1:]
 i = lag_min + np.argmax(akf[lag_min:lag_max])
 a, b, c = akf[i - 1], akf[i], akf[i + 1]
-delta = 0.5 * (a - c) / (a - 2 * b + c)        # Scheitel der Parabel
-periode_exakt = i + delta
-periode = int(round(periode_exakt))
-rpm_est = 60.0 * sr / periode_exakt
+periode = int(round(i + 0.5 * (a - c) / (a - 2 * b + c)))   # Parabel durch drei Punkte
 
-# --- Signal in ganze Perioden schneiden und stapeln ---
-anzahl_perioden = len(y) // periode
-nutzlaenge = anzahl_perioden * periode
-segmente_array = y[:nutzlaenge].reshape(anzahl_perioden, periode)
+# --- Perioden stapeln und mitteln ---
+anzahl = len(y) // periode
+mittel = y[:anzahl * periode].reshape(anzahl, periode).mean(axis=0)
 
-# --- Mittelung ueber alle Perioden -> synchrone Musterperiode ---
-mittel_periode = segmente_array.mean(axis=0)
-
-# --- Synchronen Anteil ueber die volle Laenge kacheln ---
-ns = np.tile(mittel_periode, anzahl_perioden)
-ns = np.concatenate([ns, y[nutzlaenge:]])      # Rest-Samples anhaengen
-ns = ns[:len(y)]
-
-# --- Asynchroner Rest ---
+# --- Gemittelte Periode wiederholen = Nutzschall, Rest = Stoerschall ---
+ns = np.concatenate([np.tile(mittel, anzahl), y[anzahl * periode:]])
 hs = y - ns
 
 # --- Speichern ---
-ausgabe_ns.parent.mkdir(parents=True, exist_ok=True)
-sf.write(ausgabe_ns, ns, sr)
-sf.write(ausgabe_hs, hs, sr)
-print(f"Geschaetzte Drehzahl: {rpm_est:.1f} U/min ({sr/periode_exakt:.2f} Hz)")
-print(f"Periode: {periode} Samples, {anzahl_perioden} Perioden gemittelt")
-print(f"Fertig: {ausgabe_ns}")
-print(f"Fertig: {ausgabe_hs}")
+ausgabe.mkdir(parents=True, exist_ok=True)
+sf.write(ausgabe / f"{name}Ns.wav", ns, sr)
+sf.write(ausgabe / f"{name}Hs.wav", hs, sr)
+print(f"{name}: Drehzahl {60 * sr / periode:.0f} U/min, {anzahl} Perioden gemittelt")
