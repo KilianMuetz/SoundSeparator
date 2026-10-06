@@ -105,14 +105,14 @@ def synchrone_mittelung(y, sr, block_s=0.5, rpm_min=1500, rpm_max=5000):
 
 
 # ------------------------------------------------ statistische Spektralschaetzung
-def spektralsubtraktion(y, sr, alpha=1.0, beta=0.02):
-    """Spektralsubtraktion (Boll 1979). Harte Subtraktion mit Spectral Floor."""
+def spektralsubtraktion(y, sr, beta=0.04):
+    """Spektralsubtraktion (Boll 1979). Untergrenze beta nach Stahl et al. (2000)."""
     Y_mag, phase = _stft(y, sr)
-    Hs_mag = np.maximum(Y_mag - alpha * _grundspektrum(Y_mag), beta * Y_mag)
+    Hs_mag = np.maximum(Y_mag - _grundspektrum(Y_mag), beta * Y_mag)
     return _zurueck(Y_mag - Hs_mag, Hs_mag, phase, sr, len(y))
 
 
-def _gain_schleife(Y_mag, gain, alpha_dd, xi_min):
+def _gain_schleife(Y_mag, gain, alpha_dd):
     """Gemeinsame Schleife von Wiener und MMSE-STSA (Decision-Directed, Ephraim und Malah 1984).
 
     Die Referenz ist die Maschine, die Verstaerkung extrahiert daher den Stoerschall.
@@ -124,21 +124,20 @@ def _gain_schleife(Y_mag, gain, alpha_dd, xi_min):
     for k in range(Y_mag.shape[1]):
         gamma = Y_pow[:, [k]] / ref_pow
         xi = alpha_dd * (vorher ** 2 / ref_pow) + (1 - alpha_dd) * np.maximum(gamma - 1, 0)
-        xi = np.maximum(xi, xi_min)
         Hs_mag[:, [k]] = gain(xi, gamma) * Y_mag[:, [k]]
         vorher = Hs_mag[:, [k]]
     return Hs_mag
 
 
-def wiener(y, sr, alpha_dd=0.98, xi_min=10 ** (-25 / 10)):
+def wiener(y, sr, alpha_dd=0.98):
     """Wiener-Filter (Abd El-Fattah et al. 2014)."""
     Y_mag, phase = _stft(y, sr)
     gain = lambda xi, gamma: xi / (1 + xi)
-    Hs_mag = _gain_schleife(Y_mag, gain, alpha_dd, xi_min)
+    Hs_mag = _gain_schleife(Y_mag, gain, alpha_dd)
     return _zurueck(Y_mag - Hs_mag, Hs_mag, phase, sr, len(y))
 
 
-def mmse_stsa(y, sr, alpha_dd=0.98, xi_min=10 ** (-25 / 10)):
+def mmse_stsa(y, sr, alpha_dd=0.98):
     """MMSE-STSA (Ephraim und Malah 1984)."""
     Y_mag, phase = _stft(y, sr)
 
@@ -148,27 +147,26 @@ def mmse_stsa(y, sr, alpha_dd=0.98, xi_min=10 ** (-25 / 10)):
             * ((1 + v) * i0e(v / 2) + v * i1e(v / 2))
         return np.minimum(g, 1.0)
 
-    Hs_mag = _gain_schleife(Y_mag, gain, alpha_dd, xi_min)
+    Hs_mag = _gain_schleife(Y_mag, gain, alpha_dd)
     return _zurueck(Y_mag - Hs_mag, Hs_mag, phase, sr, len(y))
 
 
 # ------------------------------------------------------- Struktur/Faktorisierung
-def hpss(y, sr, kernel_zeit=51, kernel_freq=17, power=2.0):
-    """HPSS (FitzGerald 2010) mit librosa. Harmonisch = Maschine, perkussiv = Stoerschall."""
+def hpss(y, sr):
+    """HPSS (FitzGerald 2010) mit librosa-Standardwerten. Harmonisch = Maschine, perkussiv = Stoerschall."""
     Y_mag, phase = _stft(y, sr)
-    maske_h, maske_p = librosa.decompose.hpss(Y_mag, kernel_size=(kernel_zeit, kernel_freq),
-                                              power=power, mask=True)
+    maske_h, maske_p = librosa.decompose.hpss(Y_mag, mask=True)
     return _zurueck(Y_mag * maske_h, Y_mag * maske_p, phase, sr, len(y))
 
 
-def nmf(y, sr, K=8, n_iter=300, seed=0):
+def nmf(y, sr, K=8, seed=0):
     """NMF (Virtanen 2007) mit scikit-learn, KL-Divergenz.
 
     Zuordnung der Komponenten ueber die Aehnlichkeit zum Referenzspektrum.
     """
     Y_mag, phase = _stft(y, sr)
     modell = NMF(n_components=K, beta_loss="kullback-leibler", solver="mu",
-                 max_iter=n_iter, init="random", random_state=seed)
+                 init="random", random_state=seed)
     W = modell.fit_transform(Y_mag)   # Spektren der Komponenten
     H = modell.components_            # Verlauf der Komponenten ueber die Zeit
 
@@ -202,9 +200,12 @@ def rpca(y, sr, tol=1e-7, max_iter=200):
 
 
 # ----------------------------------------------------------- adaptive Zerlegung
-def emd(y, sr, max_imf=10):
-    """EMD (Huang et al. 1998) mit PyEMD. Zuordnung der Moden ueber die Aehnlichkeit zum Referenzspektrum."""
-    imfs = EMD().emd(y, max_imf=max_imf)
+def emd(y, sr):
+    """EMD (Huang et al. 1998) mit PyEMD, ohne Begrenzung der Modenzahl.
+
+    Zuordnung der Moden ueber die Aehnlichkeit zum Referenzspektrum.
+    """
+    imfs = EMD().emd(y)
 
     spektren = np.column_stack([_mittelspektrum(imf, sr) for imf in imfs])
     nutz = _ist_nutz(_aehnlichkeit(spektren, _grundspektrum(_stft(y, sr)[0]).ravel()))
@@ -215,7 +216,7 @@ def emd(y, sr, max_imf=10):
 
 # ------------------------------------------- nur Prototypen (Trennschaerfe)
 def ssa(y, sr, L=300, r=5, block=8000):
-    """SSA (Golyandina et al. 2001). Die r staerksten Komponenten sind der Nutzschall."""
+    """SSA (Hassani 2007). Die r staerksten Komponenten sind der Nutzschall."""
     ns = y.copy()                                   # zu kurzer Restblock bleibt unveraendert
     for start in range(0, len(y), block):
         seg = y[start:start + block]
