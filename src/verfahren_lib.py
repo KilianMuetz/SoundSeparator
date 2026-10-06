@@ -152,10 +152,10 @@ def mmse_stsa(y, sr, alpha_dd=0.98):
 
 
 # ------------------------------------------------------- Struktur/Faktorisierung
-def hpss(y, sr):
-    """HPSS (FitzGerald 2010) mit librosa-Standardwerten. Harmonisch = Maschine, perkussiv = Stoerschall."""
+def hpss(y, sr, filterlaenge=17, p=2.0):
+    """HPSS (FitzGerald 2010, S. 3) mit librosa. Harmonisch = Maschine, perkussiv = Stoerschall."""
     Y_mag, phase = _stft(y, sr)
-    maske_h, maske_p = librosa.decompose.hpss(Y_mag, mask=True)
+    maske_h, maske_p = librosa.decompose.hpss(Y_mag, kernel_size=filterlaenge, power=p, mask=True)
     return _zurueck(Y_mag * maske_h, Y_mag * maske_p, phase, sr, len(y))
 
 
@@ -166,7 +166,7 @@ def nmf(y, sr, K=8, seed=0):
     """
     Y_mag, phase = _stft(y, sr)
     modell = NMF(n_components=K, beta_loss="kullback-leibler", solver="mu",
-                 init="random", random_state=seed)
+                 max_iter=1000, init="random", random_state=seed)   # Ende ueber Standardtoleranz
     W = modell.fit_transform(Y_mag)   # Spektren der Komponenten
     H = modell.components_            # Verlauf der Komponenten ueber die Zeit
 
