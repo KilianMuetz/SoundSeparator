@@ -32,6 +32,7 @@ import librosa
 import numpy as np
 from scipy.signal import resample_poly
 from sklearn.ensemble import IsolationForest
+from sklearn.metrics import roc_auc_score
 from sklearn.preprocessing import StandardScaler
 
 import verfahren_lib as vl
@@ -125,6 +126,11 @@ def bewerte(X):
 
 score_gt = [bewerte(x) for x in X_gt]
 print("Oracle-Modell trainiert.\n")
+
+# --- Obere Marke: AUC auf dem reinen Nutzsignal (Tabelle 6.3) ---
+test_idx = [i for i, e in enumerate(manifest) if e["rolle"] == "test"]
+labels = [0 if manifest[i]["nutzschall"] == "normal" else 1 for i in test_idx]
+print(f"Obere Marke AUC = {roc_auc_score(labels, [score_gt[i] for i in test_idx]):.4f}\n")
 
 # --- Bewertung je Verfahren ---
 zeilen = []
