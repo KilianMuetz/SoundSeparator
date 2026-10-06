@@ -24,8 +24,8 @@ ONSET_S = 2.0             # Einsatz des Stoerschalls innerhalb des Segments
 SNR_DB = 0.0              # Ziel-SNR Nutzschall vs. Stoerquelle (RMS-basiert)
 
 ANOMALIE_OFFSETS = [0.0, 5.0]          # zwei Segmente je Anomalieaufnahme
-NORMAL_TRAIN_ANTEILE = [0.02, 0.14, 0.26, 0.38]   # erstes Drittel der Normalaufnahme
-NORMAL_TEST_ANTEILE = [0.66, 0.80, 0.94]          # letztes Drittel, klar getrennt
+NORMAL_TRAIN_ANTEILE = [0.02, 0.14, 0.26, 0.38]   # Training in den ersten 40 % der Normalaufnahme
+NORMAL_TEST_ANTEILE = [0.66, 0.80, 0.94]          # Test in den letzten 35 %, dazwischen rund ein Viertel ungenutzt
 
 NUTZSCHALL = {
     "normal":       ("normalzustand.wav", None),
