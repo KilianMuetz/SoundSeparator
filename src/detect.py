@@ -1,12 +1,4 @@
-"""
-detect.py — Anomalieerkennung je Trennverfahren.
-
-Je Verfahren ein Isolation Forest, trainiert nur auf den Normalsegmenten des
-Trainingsbereichs, die dasselbe Verfahren durchlaufen haben. "roh" ist das
-unbearbeitete Mischsignal als Referenz.
-
-Aufruf:  python src/detect.py
-"""
+"""detect.py — je Trennverfahren ein Isolation Forest auf Normaldaten."""
 
 import csv
 import json
@@ -25,54 +17,38 @@ mix_dir = BASE / "data" / "mixed"
 getrennt_dir = BASE / "ergebnisse" / "getrennt"
 protokoll_dir = BASE / "ergebnisse" / "protokoll"
 
-SR = 16000
-SR_QUELLE = 44100
-SEEDS = [0, 1, 2, 3, 4]
-
 
 def merkmale(y):
-    """20 MFCC je Fenster (25 ms, Versatz 10 ms), Ergebnis (Fenster, 20)."""
-    y = y / (np.sqrt(np.mean(y ** 2)) + 1e-12)    # einheitliche Lautstaerke
-    m = librosa.feature.mfcc(y=y, sr=SR, n_mfcc=20, n_fft=512,
+    """20 MFCC je Fenster von 25 ms, Versatz 10 ms, bei einheitlicher Lautstaerke."""
+    y = y / (np.sqrt(np.mean(y ** 2)) + 1e-12)
+    m = librosa.feature.mfcc(y=y, sr=16000, n_mfcc=20, n_fft=512,
                              win_length=400, hop_length=160)
     return m.T.astype(np.float64)
 
 
 with open(mix_dir / "manifest.json", encoding="utf-8") as f:
     manifest = json.load(f)
-
 train = [i for i, e in enumerate(manifest) if e["rolle"] == "train"]
 test = [i for i, e in enumerate(manifest) if e["rolle"] == "test"]
-label = [0 if e["nutzschall"] == "normal" else 1 for e in manifest]
+label = [e["nutzschall"] != "normal" for e in manifest]
 
-zeilen, auc_zeilen = [], []
+scores, aucs = [["mix_id", "verfahren", "score"]], [["verfahren", "auc", "auc_std"]]
 for verfahren in ["roh"] + list(vl.VERFAHREN):
-    X = [merkmale(signal_laden(verfahren, e, mix_dir, getrennt_dir, SR, SR_QUELLE))
+    X = [merkmale(signal_laden(verfahren, e, mix_dir, getrennt_dir, 16000, 44100))
          for e in manifest]
     X_train = np.vstack([X[i] for i in train])
 
-    scores, aucs = [], []
-    for seed in SEEDS:
+    je_seed = []
+    for seed in range(5):
         modell = IsolationForest(n_estimators=100, random_state=seed).fit(X_train)
-        s = [np.mean(-modell.score_samples(X[i])) for i in test]  # hoch = auffaellig
-        scores.append(s)
-        aucs.append(roc_auc_score([label[i] for i in test], s))
-    score = np.mean(scores, axis=0)
+        je_seed.append([np.mean(-modell.score_samples(X[i])) for i in test])
+    auc = [roc_auc_score([label[i] for i in test], s) for s in je_seed]
 
-    auc_zeilen.append({"verfahren": verfahren,
-                       "auc": round(float(np.mean(aucs)), 4),
-                       "auc_std": round(float(np.std(aucs)), 4)})
-    for i, sc in zip(test, score):
-        e = manifest[i]
-        zeilen.append({"mix_id": e["mix_id"], "nutzschall": e["nutzschall"],
-                       "stoerquelle": e["stoerquelle"], "offset_s": e["offset_s"],
-                       "verfahren": verfahren, "label": label[i],
-                       "score": round(float(sc), 6)})
-    print(f"{verfahren:22s} AUC = {np.mean(aucs):.4f} +- {np.std(aucs):.4f}")
+    aucs.append([verfahren, round(np.mean(auc), 4), round(np.std(auc), 4)])
+    for i, s in zip(test, np.mean(je_seed, axis=0)):
+        scores.append([manifest[i]["mix_id"], verfahren, round(s, 6)])
+    print(f"{verfahren:22s} AUC = {np.mean(auc):.4f} +- {np.std(auc):.4f}")
 
-protokoll_dir.mkdir(parents=True, exist_ok=True)
-for name, daten in [("erkennung.csv", zeilen), ("erkennung_auc.csv", auc_zeilen)]:
+for name, zeilen in [("erkennung.csv", scores), ("erkennung_auc.csv", aucs)]:
     with open(protokoll_dir / name, "w", newline="", encoding="utf-8") as f:
-        schreiber = csv.DictWriter(f, fieldnames=list(daten[0]))
-        schreiber.writeheader()
-        schreiber.writerows(daten)
+        csv.writer(f).writerows(zeilen)

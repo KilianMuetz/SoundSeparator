@@ -1,8 +1,9 @@
 """
-mix_signals.py — Erzeugt die Mischsignale aus Nutzschall- und Stoerschallaufnahmen.
+mix_signals.py — Mischsignale aus Nutz- und Stoerschallaufnahmen.
 
-Jedes Segment ist 5 s lang. Der Stoerschall setzt nach 2 s ein, wird ueber das
-ganze Segment auf 0 dB SNR skaliert, danach wird der Spitzenwert auf 0,9 begrenzt.
+Jedes Segment ist 5 s lang. Der Stoerschall setzt nach 2 s ein und wird
+ueber das ganze Segment auf 0 dB SNR skaliert. Danach wird der Spitzenwert
+auf 0,9 begrenzt.
 
 Aufruf:  python src/mix_signals.py
 """
@@ -23,9 +24,9 @@ EINSATZ = 2.0    # Einsatz des Stoerschalls in s
 SNR_DB = 0.0     # Nutz- und Stoerschall gleich laut, ueber das ganze Segment
 PEAK = 0.9       # Obergrenze gegen Uebersteuerung
 
-NORMAL_TRAIN = [0.02, 0.14, 0.26, 0.38]   # Training in den ersten 40 % der Normalaufnahme
+NORMAL_TRAIN = [0.02, 0.14, 0.26, 0.38]   # Training in den ersten 40 %
 NORMAL_TEST = [0.66, 0.80, 0.94]          # Test in den letzten 35 %
-ANOMALIE_OFFSETS = [0.0, 5.0]             # zwei Segmente je Anomalieaufnahme in s
+ANOMALIE_OFFSETS = [0.0, 5.0]             # zwei Segmente je Anomalie in s
 
 NUTZSCHALL = {
     "normal":      "normalzustand.wav",
@@ -66,7 +67,7 @@ def rms(x):
 
 
 def bestandteile(nutz_full, stoer_full, art, offset):
-    """Nutz- und Stoeranteil eines Mischsignals. Das Mischsignal ist ihre Summe."""
+    """Nutz- und Stoeranteil, ihre Summe ist das Mischsignal."""
     n, einsatz = int(DAUER * SR), int(EINSATZ * SR)
     rest = n - einsatz
 
