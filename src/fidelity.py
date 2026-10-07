@@ -25,7 +25,6 @@ Aufruf:  python src/fidelity.py
 
 import csv
 import json
-import sys
 from pathlib import Path
 
 import librosa
@@ -38,7 +37,6 @@ from sklearn.preprocessing import StandardScaler
 import verfahren_lib as vl
 from io_utils import signal_laden as _signal_laden
 
-sys.path.insert(0, str(Path(__file__).parent / "pre"))
 import mix_signals as ms
 
 # --- Pfade ---
@@ -63,23 +61,22 @@ _cache = {}
 def roh_laden(name):
     """Rohaufnahme mit Zwischenspeicher, die Normalaufnahme ist gross."""
     if name not in _cache:
-        _cache[name] = ms.load_mono(set_dir / name, SR_QUELLE)
+        _cache[name] = ms.load_mono(name)
     return _cache[name]
 
 
 def ground_truth(eintrag):
     """Reines Nutzsignal des Mischsignals, inklusive der Mischskalierung.
 
-    Nutzt mix_signals.rekonstruiere_bestandteile() -- dieselbe Rechnung,
+    Nutzt mix_signals.bestandteile() -- dieselbe Rechnung,
     mit der auch build_mix() das Mischsignal erzeugt hat, statt einer
     eigenen Kopie der Onset-/Skalierungslogik.
     """
-    nutz_file = ms.NUTZSCHALL[eintrag["nutzschall"]][0]
+    nutz_file = ms.NUTZSCHALL[eintrag["nutzschall"]]
     stoer_file, stoer_type = ms.STOERQUELLEN[eintrag["stoerquelle"]]
 
-    nutz, _, _ = ms.rekonstruiere_bestandteile(
-        roh_laden(nutz_file), roh_laden(stoer_file), stoer_type,
-        eintrag["offset_s"], sr=SR_QUELLE)
+    nutz, _ = ms.bestandteile(
+        roh_laden(nutz_file), roh_laden(stoer_file), stoer_type, eintrag["offset_s"])
 
     return resample_poly(nutz, SR // 100, SR_QUELLE // 100)
 

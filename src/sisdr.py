@@ -18,7 +18,6 @@ Aufruf:  python src/sisdr.py
 
 import csv
 import json
-import sys
 from pathlib import Path
 
 import numpy as np
@@ -27,7 +26,6 @@ from scipy.signal import resample_poly
 import verfahren_lib as vl
 from io_utils import signal_laden as _signal_laden
 
-sys.path.insert(0, str(Path(__file__).parent / "pre"))
 import mix_signals as ms
 
 # --- Pfade ---
@@ -46,22 +44,21 @@ _cache = {}
 
 def roh_laden(name):
     if name not in _cache:
-        _cache[name] = ms.load_mono(set_dir / name, SR_QUELLE)
+        _cache[name] = ms.load_mono(name)
     return _cache[name]
 
 
 def bestandteile(eintrag):
     """Reines Nutz- und Stoersignal des Mischsignals, bei 16 kHz.
 
-    Nutzt mix_signals.rekonstruiere_bestandteile() -- dieselbe Rechnung wie
+    Nutzt mix_signals.bestandteile() -- dieselbe Rechnung wie
     build_mix() und fidelity.ground_truth(), statt einer eigenen Kopie.
     """
-    nutz_file = ms.NUTZSCHALL[eintrag["nutzschall"]][0]
+    nutz_file = ms.NUTZSCHALL[eintrag["nutzschall"]]
     stoer_file, stoer_type = ms.STOERQUELLEN[eintrag["stoerquelle"]]
 
-    nutz, stoer, _ = ms.rekonstruiere_bestandteile(
-        roh_laden(nutz_file), roh_laden(stoer_file), stoer_type,
-        eintrag["offset_s"], sr=SR_QUELLE)
+    nutz, stoer = ms.bestandteile(
+        roh_laden(nutz_file), roh_laden(stoer_file), stoer_type, eintrag["offset_s"])
 
     return (resample_poly(nutz, SR // 100, SR_QUELLE // 100),
             resample_poly(stoer, SR // 100, SR_QUELLE // 100))
