@@ -1,22 +1,9 @@
 """
-detect.py — Merkmalsextraktion und unueberwachte Anomalieerkennung.
+detect.py — Anomalieerkennung je Trennverfahren.
 
-Je Trennverfahren wird ein eigener Isolation Forest ausschliesslich auf
-Normaldaten trainiert, die zuvor durch dasselbe Verfahren verarbeitet wurden.
-Damit lernt jedes Modell die Artefakte seines Verfahrens als normal und
-bewertet nicht die Trennung, sondern die Maschinenanomalie.
-
-Trainings- und Testnormaldaten stammen aus zeitlich getrennten Abschnitten
-der Normalaufnahme (Feld "rolle" im Manifest). Damit kann kein Testsegment
-aus seinem eigenen Trainingsmaterial bewertet werden.
-
-Zusaetzlich wird das unbearbeitete Mischsignal als Referenz ausgewertet
-("roh"). Der Vergleich gegen diese Referenz zeigt, ob die Trennung die
-Anomalieerkennung ueberhaupt verbessert.
-
-Merkmale: 20 MFCCs je Frame (25 ms Fenster, 10 ms Versatz).
-Bewertung: mittlerer Anomaliescore ueber alle Frames eines Segments,
-gemittelt ueber mehrere Isolation-Forest-Initialisierungen.
+Je Verfahren ein Isolation Forest, trainiert nur auf den Normalsegmenten des
+Trainingsbereichs, die dasselbe Verfahren durchlaufen haben. "roh" ist das
+unbearbeitete Mischsignal als Referenz.
 
 Aufruf:  python src/detect.py
 """
@@ -29,129 +16,63 @@ import librosa
 import numpy as np
 from sklearn.ensemble import IsolationForest
 from sklearn.metrics import roc_auc_score
-from sklearn.preprocessing import StandardScaler
 
 import verfahren_lib as vl
-from io_utils import signal_laden as _signal_laden
+from io_utils import signal_laden
 
-# --- Pfade ---
 BASE = Path(__file__).parent.parent
 mix_dir = BASE / "data" / "mixed"
 getrennt_dir = BASE / "ergebnisse" / "getrennt"
-merkmal_dir = BASE / "ergebnisse" / "merkmale"
 protokoll_dir = BASE / "ergebnisse" / "protokoll"
 
-# --- Parameter ---
 SR = 16000
 SR_QUELLE = 44100
-N_MFCC = 20        # in Abstimmung mit Roewaplan
-N_FFT = 512
-WIN_LENGTH = 400   # 25 ms
-HOP_LENGTH = 160   # 10 ms
-SEEDS = [0, 1, 2, 3, 4]   # Mittelung ueber mehrere Isolation-Forest-Initialisierungen
+SEEDS = [0, 1, 2, 3, 4]
 
 
 def merkmale(y):
-    """20 MFCCs je Frame, Ergebnis (n_frames, N_MFCC).
-
-    Pegelnormiert wie in fidelity.py: ohne Normierung traegt der 0. MFCC
-    (c0) die Gesamtlautstaerke des Segments. Verfahren mit geringem
-    Signalerhalt (z. B. synchrone Mittelung, Tabelle 6.4) liefern leisere
-    Nutzsignale, die im Merkmalsraum sonst allein wegen des Pegels als
-    Anomalie auffallen koennten -- unabhaengig von der tatsaechlichen
-    spektralen Trennqualitaet. Die Normierung entkoppelt beides.
-    """
-    y = y / (np.sqrt(np.mean(y ** 2)) + 1e-12)
-    m = librosa.feature.mfcc(y=y, sr=SR, n_mfcc=N_MFCC, n_fft=N_FFT,
-                             win_length=WIN_LENGTH, hop_length=HOP_LENGTH)
+    """20 MFCC je Fenster (25 ms, Versatz 10 ms), Ergebnis (Fenster, 20)."""
+    y = y / (np.sqrt(np.mean(y ** 2)) + 1e-12)    # einheitliche Lautstaerke
+    m = librosa.feature.mfcc(y=y, sr=SR, n_mfcc=20, n_fft=512,
+                             win_length=400, hop_length=160)
     return m.T.astype(np.float64)
 
 
-def signal_laden(verfahren, eintrag):
-    return _signal_laden(verfahren, eintrag, mix_dir, getrennt_dir, SR, SR_QUELLE)
-
-
-# --- Mischsignale ---
 with open(mix_dir / "manifest.json", encoding="utf-8") as f:
     manifest = json.load(f)
 
-train_idx = [i for i, e in enumerate(manifest) if e["rolle"] == "train"]
-test_idx = [i for i, e in enumerate(manifest) if e["rolle"] == "test"]
-labels = [0 if e["nutzschall"] == "normal" else 1 for e in manifest]
+train = [i for i, e in enumerate(manifest) if e["rolle"] == "train"]
+test = [i for i, e in enumerate(manifest) if e["rolle"] == "test"]
+label = [0 if e["nutzschall"] == "normal" else 1 for e in manifest]
 
-assert all(labels[i] == 0 for i in train_idx), "Trainingsmenge enthaelt Anomalien"
-print(f"{len(train_idx)} Trainingssegmente, {len(test_idx)} Testsegmente "
-      f"(davon {sum(1 for i in test_idx if labels[i] == 0)} normal, "
-      f"{sum(labels[i] for i in test_idx)} anomal)\n")
-
-merkmal_dir.mkdir(parents=True, exist_ok=True)
-protokoll_dir.mkdir(parents=True, exist_ok=True)
-
-zeilen = []
-zusammenfassung = []
-
+zeilen, auc_zeilen = [], []
 for verfahren in ["roh"] + list(vl.VERFAHREN):
-    # --- Merkmale aller Segmente ---
-    X = [merkmale(signal_laden(verfahren, e)) for e in manifest]
-    np.savez_compressed(merkmal_dir / f"{verfahren}.npz",
-                        **{e["mix_id"]: x for e, x in zip(manifest, X)})
+    X = [merkmale(signal_laden(verfahren, e, mix_dir, getrennt_dir, SR, SR_QUELLE))
+         for e in manifest]
+    X_train = np.vstack([X[i] for i in train])
 
-    # --- Training auf den Normaldaten des Trainingsbereichs, ueber Seeds gemittelt ---
-    X_train = np.vstack([X[i] for i in train_idx])
-    skalierer = StandardScaler().fit(X_train)
-    X_train_s = skalierer.transform(X_train)
-
-    scores_je_seed = []
-    aucs = []
+    scores, aucs = [], []
     for seed in SEEDS:
-        modell = IsolationForest(random_state=seed, n_estimators=100)
-        modell.fit(X_train_s)
-        s = {i: float(np.mean(-modell.score_samples(skalierer.transform(X[i]))))
-             for i in test_idx}
-        scores_je_seed.append(s)
-        aucs.append(roc_auc_score([labels[i] for i in test_idx],
-                                  [s[i] for i in test_idx]))
+        modell = IsolationForest(n_estimators=100, random_state=seed).fit(X_train)
+        s = [np.mean(-modell.score_samples(X[i])) for i in test]  # hoch = auffaellig
+        scores.append(s)
+        aucs.append(roc_auc_score([label[i] for i in test], s))
+    score = np.mean(scores, axis=0)
 
-    scores = {i: float(np.mean([s[i] for s in scores_je_seed])) for i in test_idx}
-
-    # --- Diagnose: kollabierte Normalscores deuten auf ein Datenleck hin ---
-    norm = np.array([scores[i] for i in test_idx if labels[i] == 0])
-    anom = np.array([scores[i] for i in test_idx if labels[i] == 1])
-
-    zusammenfassung.append({
-        "verfahren": verfahren,
-        "auc": round(float(np.mean(aucs)), 4),
-        "auc_std": round(float(np.std(aucs)), 4),
-        "score_normal": round(float(norm.mean()), 4),
-        "streuung_normal": round(float(norm.std()), 4),
-        "score_anomal": round(float(anom.mean()), 4),
-        "streuung_anomal": round(float(anom.std()), 4),
-    })
-    print(f"{verfahren:24s} AUC = {np.mean(aucs):.4f} +- {np.std(aucs):.4f}   "
-          f"Streuung normal {norm.std():.4f}")
-
-    for i in test_idx:
+    auc_zeilen.append({"verfahren": verfahren,
+                       "auc": round(float(np.mean(aucs)), 4),
+                       "auc_std": round(float(np.std(aucs)), 4)})
+    for i, sc in zip(test, score):
         e = manifest[i]
-        zeilen.append({
-            "mix_id": e["mix_id"],
-            "nutzschall": e["nutzschall"],
-            "stoerquelle": e["stoerquelle"],
-            "offset_s": e["offset_s"],
-            "verfahren": verfahren,
-            "label": labels[i],
-            "score": round(scores[i], 6),
-        })
+        zeilen.append({"mix_id": e["mix_id"], "nutzschall": e["nutzschall"],
+                       "stoerquelle": e["stoerquelle"], "offset_s": e["offset_s"],
+                       "verfahren": verfahren, "label": label[i],
+                       "score": round(float(sc), 6)})
+    print(f"{verfahren:22s} AUC = {np.mean(aucs):.4f} +- {np.std(aucs):.4f}")
 
-# --- Protokolle schreiben ---
-with open(protokoll_dir / "erkennung.csv", "w", newline="", encoding="utf-8") as f:
-    schreiber = csv.DictWriter(f, fieldnames=list(zeilen[0].keys()))
-    schreiber.writeheader()
-    schreiber.writerows(zeilen)
-
-with open(protokoll_dir / "erkennung_auc.csv", "w", newline="", encoding="utf-8") as f:
-    schreiber = csv.DictWriter(f, fieldnames=list(zusammenfassung[0].keys()))
-    schreiber.writeheader()
-    schreiber.writerows(zusammenfassung)
-
-print(f"\nScores:  {protokoll_dir / 'erkennung.csv'}")
-print(f"AUC:     {protokoll_dir / 'erkennung_auc.csv'}")
+protokoll_dir.mkdir(parents=True, exist_ok=True)
+for name, daten in [("erkennung.csv", zeilen), ("erkennung_auc.csv", auc_zeilen)]:
+    with open(protokoll_dir / name, "w", newline="", encoding="utf-8") as f:
+        schreiber = csv.DictWriter(f, fieldnames=list(daten[0]))
+        schreiber.writeheader()
+        schreiber.writerows(daten)
