@@ -35,7 +35,7 @@ from sklearn.metrics import roc_auc_score
 from sklearn.preprocessing import StandardScaler
 
 import verfahren_lib as vl
-from io_utils import signal_laden as _signal_laden
+from io_utils import aufteilen, signal_laden as _signal_laden
 
 import mix_signals as ms
 
@@ -97,7 +97,7 @@ def signal_laden(verfahren, eintrag):
 with open(mix_dir / "manifest.json", encoding="utf-8") as f:
     manifest = json.load(f)
 
-train_idx = [i for i, e in enumerate(manifest) if e["rolle"] == "train"]
+train_idx, test_idx = aufteilen(manifest)
 print(f"{len(manifest)} Mischsignale, {len(train_idx)} davon Trainingssegmente.\n")
 
 # --- Ground Truth und Oracle-Modell ---
@@ -125,7 +125,6 @@ score_gt = [bewerte(x) for x in X_gt]
 print("Oracle-Modell trainiert.\n")
 
 # --- Obere Marke: AUC auf dem reinen Nutzsignal (Tabelle 6.3) ---
-test_idx = [i for i, e in enumerate(manifest) if e["rolle"] == "test"]
 labels = [0 if manifest[i]["nutzschall"] == "normal" else 1 for i in test_idx]
 print(f"Obere Marke AUC = {roc_auc_score(labels, [score_gt[i] for i in test_idx]):.4f}\n")
 

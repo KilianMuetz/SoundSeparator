@@ -8,6 +8,17 @@ import soundfile as sf
 from scipy.signal import resample_poly
 
 
+def aufteilen(manifest):
+    """Zeitlicher Split: frueher Teil der Normalaufnahme Training, spaeterer Test.
+
+    Die Zuordnung steht als "rolle" im Manifest (siehe mix_signals.py).
+    Alle Anomaliesegmente gehoeren zum Test.
+    """
+    train = [i for i, e in enumerate(manifest) if e["rolle"] == "train"]
+    test = [i for i, e in enumerate(manifest) if e["rolle"] == "test"]
+    return train, test
+
+
 def signal_laden(verfahren, eintrag, mix_dir, getrennt_dir, sr_ziel, sr_quelle):
     """Getrenntes Nutzsignal, fuer 'roh' das dezimierte Mischsignal."""
     if verfahren == "roh":

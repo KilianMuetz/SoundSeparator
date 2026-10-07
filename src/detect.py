@@ -10,7 +10,7 @@ from sklearn.ensemble import IsolationForest
 from sklearn.metrics import roc_auc_score
 
 import verfahren_lib as vl
-from io_utils import signal_laden
+from io_utils import aufteilen, signal_laden
 
 BASE = Path(__file__).parent.parent
 mix_dir = BASE / "data" / "mixed"
@@ -28,8 +28,7 @@ def merkmale(y):
 
 with open(mix_dir / "manifest.json", encoding="utf-8") as f:
     manifest = json.load(f)
-train = [i for i, e in enumerate(manifest) if e["rolle"] == "train"]
-test = [i for i, e in enumerate(manifest) if e["rolle"] == "test"]
+train, test = aufteilen(manifest)
 label = [e["nutzschall"] != "normal" for e in manifest]
 
 scores, aucs = [["mix_id", "verfahren", "score"]], [["verfahren", "auc", "auc_std"]]
