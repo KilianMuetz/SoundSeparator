@@ -1,11 +1,9 @@
 """
 mix_signals.py — Mischsignale aus Nutz- und Stoerschallaufnahmen.
 
-Jedes Segment ist 5 s lang. Der Stoerschall setzt nach 2 s ein und wird
-ueber das ganze Segment auf 0 dB SNR skaliert. Danach wird der Spitzenwert
-auf 0,9 begrenzt.
-
-Aufruf:  python src/mix_signals.py
+Jedes Segment ist 5 s lang. Der Stoerschall setzt nach 2 s ein und ist
+ueber das ganze Segment gleich laut wie der Nutzschall. Der Spitzenwert
+wird auf 0,9 begrenzt.
 """
 
 import json
@@ -21,7 +19,6 @@ mix_dir = BASE / "data" / "mixed"
 SR = 44100
 DAUER = 5.0      # Segmentlaenge in s
 EINSATZ = 2.0    # Einsatz des Stoerschalls in s
-SNR_DB = 0.0     # Nutz- und Stoerschall gleich laut, ueber das ganze Segment
 PEAK = 0.9       # Obergrenze gegen Uebersteuerung
 
 NORMAL_TRAIN = [0.02, 0.14, 0.26, 0.38]   # Training in den ersten 40 %
@@ -84,7 +81,7 @@ def bestandteile(nutz_full, stoer_full, art, offset):
         k = min(len(stoer_full), rest)
         stoer[einsatz:einsatz + k] = stoer_full[:k]
 
-    stoer = stoer * (rms(nutz) / (10 ** (SNR_DB / 20)) / rms(stoer))
+    stoer = stoer * (rms(nutz) / rms(stoer))   # gleich laut
     faktor = min(1.0, PEAK / np.max(np.abs(nutz + stoer)))
     return nutz * faktor, stoer * faktor
 
@@ -112,7 +109,7 @@ if __name__ == "__main__":
                 manifest.append({"mix_id": mix_id, "nutzschall": nutz_name,
                                  "stoerquelle": stoer_name, "segment": seg,
                                  "offset_s": round(offset, 2), "rolle": rolle,
-                                 "snr_db": SNR_DB, "file": datei})
+                                 "file": datei})
 
     with open(mix_dir / "manifest.json", "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2, ensure_ascii=False)

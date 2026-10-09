@@ -1,131 +1,35 @@
-"""
-sisdr.py — Trennqualitaet gegen die Ground Truth.
-
-Fuer jedes Mischsignal werden das reine Nutz- und Stoersignal deterministisch
-aus den Rohaufnahmen rekonstruiert. Daraus drei Groessen je Verfahren:
-
-  si_sdr      — Signal-to-Distortion Ratio des geschaetzten Nutzsignals in dB
-                (skaleninvariant, Le Roux u.a. 2019)
-  si_sdri     — Verbesserung gegenueber dem unbearbeiteten Mischsignal in dB.
-                Positiv heisst Gewinn, negativ heisst Schaden.
-  signalerhalt / stoerrest
-              — Zerlegung des geschaetzten Nutzsignals in Nutz- und Stoeranteil
-                per kleinster Quadrate. Im Mischsignal sind beide gleich 1.
-                Ideal waere Signalerhalt 1 bei Stoerrest 0.
-
-Aufruf:  python src/sisdr.py
-"""
+"""sisdr.py — Trennqualitaet als SI-SDR gegen die Ground Truth (Le Roux et al. 2019)."""
 
 import csv
-import json
-from pathlib import Path
 
 import numpy as np
-from scipy.signal import resample_poly
 
 import verfahren_lib as vl
-from io_utils import signal_laden as _signal_laden
-
-import mix_signals as ms
-
-# --- Pfade ---
-BASE = Path(__file__).parent.parent
-set_dir = BASE / "data" / "set"
-mix_dir = BASE / "data" / "mixed"
-getrennt_dir = BASE / "ergebnisse" / "getrennt"
-protokoll_dir = BASE / "ergebnisse" / "protokoll"
-
-SR = 16000
-SR_QUELLE = 44100
-EPS = 1e-12
-
-_cache = {}
-
-
-def roh_laden(name):
-    if name not in _cache:
-        _cache[name] = ms.load_mono(name)
-    return _cache[name]
-
-
-def bestandteile(eintrag):
-    """Reines Nutz- und Stoersignal des Mischsignals, bei 16 kHz.
-
-    Nutzt mix_signals.bestandteile() -- dieselbe Rechnung wie
-    build_mix() und fidelity.ground_truth(), statt einer eigenen Kopie.
-    """
-    nutz_file = ms.NUTZSCHALL[eintrag["nutzschall"]]
-    stoer_file, stoer_type = ms.STOERQUELLEN[eintrag["stoerquelle"]]
-
-    nutz, stoer = ms.bestandteile(
-        roh_laden(nutz_file), roh_laden(stoer_file), stoer_type, eintrag["offset_s"])
-
-    return (resample_poly(nutz, SR // 100, SR_QUELLE // 100),
-            resample_poly(stoer, SR // 100, SR_QUELLE // 100))
+from daten import PROTOKOLL, ground_truth, manifest, nutzsignal
 
 
 def si_sdr(schaetzung, ziel):
-    """Skaleninvariantes SDR in dB."""
-    ziel = ziel - ziel.mean()
-    schaetzung = schaetzung - schaetzung.mean()
-    anteil = np.dot(schaetzung, ziel) / (np.dot(ziel, ziel) + EPS) * ziel
+    """Passender Anteil der Schaetzung im Verhaeltnis zum Rest, in dB."""
+    ziel, schaetzung = ziel - ziel.mean(), schaetzung - schaetzung.mean()
+    anteil = np.dot(schaetzung, ziel) / np.dot(ziel, ziel) * ziel
     rest = schaetzung - anteil
-    return 10 * np.log10((np.dot(anteil, anteil) + EPS) / (np.dot(rest, rest) + EPS))
+    return 10 * np.log10(np.dot(anteil, anteil) / np.dot(rest, rest))
 
 
-def zerlegung(schaetzung, nutz, stoer):
-    """Kleinste Quadrate: schaetzung ~ a*nutz + b*stoer."""
-    A = np.column_stack([nutz, stoer])
-    a, b = np.linalg.lstsq(A, schaetzung, rcond=None)[0]
-    return float(a), float(b)
+ziele = [ground_truth(e)[0] for e in manifest]
 
 
-def signal_laden(verfahren, eintrag):
-    return _signal_laden(verfahren, eintrag, mix_dir, getrennt_dir, SR, SR_QUELLE)
+def werte(verfahren):
+    return np.array([si_sdr(nutzsignal(verfahren, e), z) for e, z in zip(manifest, ziele)])
 
 
-with open(mix_dir / "manifest.json", encoding="utf-8") as f:
-    manifest = json.load(f)
+basis = werte("roh")
+zeilen = [["mix_id", "nutzschall", "stoerquelle", "verfahren", "si_sdr", "si_sdri"]]
+for verfahren in ["roh", *vl.VERFAHREN]:
+    w = werte(verfahren)
+    zeilen += [[e["mix_id"], e["nutzschall"], e["stoerquelle"], verfahren,
+                round(a, 3), round(a - b, 3)] for e, a, b in zip(manifest, w, basis)]
+    print(f"{verfahren:22s} SI-SDR {np.median(w):6.2f} dB   Gewinn {np.median(w - basis):+6.2f} dB")
 
-print(f"{len(manifest)} Mischsignale, Ground Truth wird rekonstruiert ...\n")
-gt = [bestandteile(e) for e in manifest]
-basis = [si_sdr(n + s, n) for n, s in gt]     # SI-SDR des Mischsignals
-
-zeilen = []
-for verfahren in ["roh"] + list(vl.VERFAHREN):
-    werte, gewinne = [], []
-    for e, (nutz, stoer), b in zip(manifest, gt, basis):
-        ns = signal_laden(verfahren, e)
-        m = min(len(ns), len(nutz))
-        ns, n_, s_ = ns[:m], nutz[:m], stoer[:m]
-
-        wert = si_sdr(ns, n_)
-        erhalt, rest = zerlegung(ns, n_, s_)
-        werte.append(wert)
-        gewinne.append(wert - b)
-
-        zeilen.append({
-            "mix_id": e["mix_id"],
-            "nutzschall": e["nutzschall"],
-            "stoerquelle": e["stoerquelle"],
-            "verfahren": verfahren,
-            "si_sdr": round(wert, 3),
-            "si_sdri": round(wert - b, 3),
-            "signalerhalt": round(erhalt, 4),
-            "stoerrest": round(rest, 4),
-        })
-
-    rs = [z for z in zeilen if z["verfahren"] == verfahren]
-    print(f"{verfahren:22s} SI-SDR {np.median(werte):7.2f} dB   "
-          f"Gewinn {np.median(gewinne):+6.2f} dB   "
-          f"Erhalt {np.median([z['signalerhalt'] for z in rs]):5.2f}   "
-          f"Stoerrest {np.median([z['stoerrest'] for z in rs]):5.2f}")
-
-protokoll_dir.mkdir(parents=True, exist_ok=True)
-ziel = protokoll_dir / "trennqualitaet.csv"
-with open(ziel, "w", newline="", encoding="utf-8") as f:
-    schreiber = csv.DictWriter(f, fieldnames=list(zeilen[0].keys()))
-    schreiber.writeheader()
-    schreiber.writerows(zeilen)
-
-print(f"\nProtokoll: {ziel}")
+with open(PROTOKOLL / "trennqualitaet.csv", "w", newline="", encoding="utf-8") as f:
+    csv.writer(f).writerows(zeilen)
