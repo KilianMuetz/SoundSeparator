@@ -26,15 +26,16 @@ Die Skripte laufen nacheinander aus dem Projektordner.
 | Schritt | Aufruf | Ergebnis |
 |---|---|---|
 | 1 | `python src/mix_signals.py` | 228 Mischsignale in `data/mixed` |
-| 2 | `python src/apply_methods.py` | getrennte Signale in `ergebnisse/getrennt`, Rechenzeiten |
+| 2 | `python src/apply_methods.py` | getrennte Signale in `ergebnisse/getrennt` |
 | 3 | `python src/detect.py` | AUC und Konfusionsmatrix je Verfahren |
 | 4 | `python src/sisdr.py` | Trennqualität als SI-SDR |
-| 5 | `python src/abbildungen.py` | Spektrogramme und Konfusionsmatrizen |
+| 5 | `python src/auswertung.py` | Aufschlüsselung für Kapitel 6 |
+| 6 | `python src/abbildungen.py` | Spektrogramme und Konfusionsmatrizen |
 
 `python src/trennschaerfe.py` bewertet die zehn Prototypen aus Kapitel 3 am
 Feldsignal `data/observ_1.wav`.
 
-Schritt 2 dauert am längsten und nutzt alle Prozessorkerne.
+Schritt 2 dauert am längsten und nutzt alle Prozessorkerne. Die Rechenzeiten in Kapitel 6 stammen aus einem früheren Lauf, in dem die Trennungen nacheinander liefen.
 
 ## Dateien
 
@@ -46,6 +47,7 @@ Schritt 2 dauert am längsten und nutzt alle Prozessorkerne.
 | `src/apply_methods.py` | Wendet alle Verfahren auf alle Mischsignale an |
 | `src/detect.py` | Anomalieerkennung mit Isolation Forest |
 | `src/sisdr.py` | Trennqualität gegen die Ground Truth |
+| `src/auswertung.py` | Tabellen für Kapitel 6 |
 | `src/abbildungen.py` | Abbildungen für Kapitel 6 |
 | `src/trennschaerfe.py` | Trennschärfe der Prototypen |
 
@@ -59,7 +61,8 @@ Schritt 2 dauert am längsten und nutzt alle Prozessorkerne.
   (K. J. Piczak, *ESC: Dataset for Environmental Sound Classification*,
   ACM Multimedia 2015). Es gelten die Lizenzen der einzelnen ESC-50-Clips.
 
-Die Aufnahmen entstanden im Rahmen des Projekts SIPREMA bei Röwaplan.
+Die Aufnahmen entstanden im Rahmen des Projekts SIPREMA bei Röwaplan und sind
+nur für die Begutachtung der Arbeit bestimmt.
 
 ## Ergebnisse
 
