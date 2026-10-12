@@ -1,6 +1,7 @@
 """auswertung.py — Tabellen fuer Kapitel 6 aus den Protokollen.
 
-Erkennung je Anomalie, Stoerart und Schweregrad sowie Trennqualitaet je Stoerart.
+Erkennung je Anomalie, Stoerart und Schweregrad, Trennqualitaet je Stoerart
+sowie Rechenzeit je Verfahren.
 """
 
 import csv
@@ -51,3 +52,9 @@ for verfahren in dict.fromkeys(z["verfahren"] for z in zeilen):
                             and stoerart(info[z["mix_id"]]) == g]) for g in ["fremd", "hintergrund"]}
     print(f"{verfahren:22s} Fremd {gewinn['fremd']:+6.2f}   Hintergrund {gewinn['hintergrund']:+6.2f}")
 
+
+print("\nRechenzeit je Segment in s, Trennungen nacheinander")
+zeilen = lesen("laufzeiten.csv")
+for verfahren in dict.fromkeys(z["verfahren"] for z in zeilen):
+    d = [float(z["dauer_s"]) for z in zeilen if z["verfahren"] == verfahren]
+    print(f"{verfahren:22s} Median {np.median(d):8.3f}   Spannweite {min(d):.3f} bis {max(d):.3f}")
