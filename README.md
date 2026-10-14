@@ -35,7 +35,7 @@ Die Skripte laufen nacheinander aus dem Projektordner.
 `python src/trennschaerfe.py` bewertet die zehn Prototypen aus Kapitel 3 am
 Feldsignal `data/observ_1.wav`.
 
-Schritt 2 dauert am längsten und nutzt alle Prozessorkerne. Die Rechenzeiten in Kapitel 6 stammen aus einem früheren Lauf, in dem die Trennungen nacheinander liefen.
+Schritt 2 dauert am längsten. Mit `NACHEINANDER = True` laufen die Trennungen nacheinander, die Rechenzeiten in Kapitel 6 stammen aus diesem Lauf. Mit `NACHEINANDER = False` rechnet das Skript parallel auf allen Prozessorkernen, die Rechenzeiten sind dann nicht vergleichbar.
 
 ## Dateien
 
