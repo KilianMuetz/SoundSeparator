@@ -37,6 +37,19 @@ Feldsignal `data/observ_1.wav`.
 
 Schritt 2 dauert am längsten. Mit `NACHEINANDER = True` laufen die Trennungen nacheinander, die Rechenzeiten in Kapitel 6 stammen aus diesem Lauf. Mit `NACHEINANDER = False` rechnet das Skript parallel auf allen Prozessorkernen, die Rechenzeiten sind dann nicht vergleichbar.
 
+## WebApp
+
+Lokale Oberfläche für die drei statistischen Verfahren. WAV laden, Verfahren
+wählen, trennen. Angezeigt werden Dauer der Trennung, Unabhängigkeit U,
+Rekonstruktionsfehler, Zeitsignal, Spektrogramm und Audio für Mischsignal,
+Nutzschall und Störschall.
+
+```
+python webapp/app.py           # oder Doppelklick auf webapp\start.bat
+```
+
+Der Browser öffnet `http://127.0.0.1:8000`. Keine zusätzlichen Pakete nötig.
+
 ## Dateien
 
 | Datei | Inhalt |
@@ -50,6 +63,9 @@ Schritt 2 dauert am längsten. Mit `NACHEINANDER = True` laufen die Trennungen n
 | `src/auswertung.py` | Tabellen für Kapitel 6 |
 | `src/abbildungen.py` | Abbildungen für Kapitel 6 |
 | `src/trennschaerfe.py` | Trennschärfe der Prototypen |
+| `webapp/app.py` | Lokaler Server der WebApp, ruft `verfahren_lib` auf |
+| `webapp/index.html` | Oberfläche im Stil von Windows 2000 |
+| `webapp/start.bat` | Startet die WebApp aus dem venv |
 
 ## Daten
 
