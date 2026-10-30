@@ -4,3 +4,7 @@ __pycache__/
 ergebnisse/
 *.pyc
 *.pdf
+
+mimii/data/
+mimii/NOISE/
+mimii/ergebnisse/

@@ -1,0 +1,7 @@
+venv/
+__pycache__/
+NOISE/
+data/
+ergebnisse/
+*.wav
+*.zip
